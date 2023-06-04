@@ -3,16 +3,21 @@ import ReactDOM from 'react-dom/client';
 
 //Components
 import Head from './components/Head';
+import ListButtons from './components/ListButtons';
+import ListItems from './components/ListItems';
+import NewButton from './components/NewButton';
 
 //Tailwind
 import "./index.css";
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div className='grid grid-cols-3 grid-rows-3 gap-4'>
-    <Head></Head>
+    <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4'>
+      <Head></Head>
+      <ListButtons></ListButtons>
+      <ListItems></ListItems>
+      <NewButton></NewButton>
     </div>
   </React.StrictMode>
 );
