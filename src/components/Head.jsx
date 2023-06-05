@@ -1,6 +1,4 @@
-import "../index.css";
-
-const Head = () => {
+const Head = ({database}) => {
 
     return (
         <div className="flex flex-col">
@@ -13,7 +11,7 @@ const Head = () => {
                 </button>
             </div>
             <div>
-                <h1 className="text-3xl">Shopping List(4)</h1>
+                <h1 className="text-3xl">Shopping List({database.length})</h1>
             </div>
         </div>
     )

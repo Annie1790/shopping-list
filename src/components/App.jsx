@@ -28,7 +28,7 @@ const App = () => {
     // }
     return (
         <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4'>
-            <Head></Head>
+            <Head database={groceryList}></Head>
             <ListButtons></ListButtons>
             <ListItems database={groceryList}></ListItems>
             <NewButton></NewButton>
