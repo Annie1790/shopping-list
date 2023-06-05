@@ -4,12 +4,34 @@ import ListButtons from './ListButtons';
 import ListItems from './ListItems';
 import NewButton from './NewButton';
 
+//React Hooks
+import { useState } from "react";
+
+//Test database
+import db from "./testDB";
+
 const App = () => {
+    const [database, setDatabase] = useState(db);
+
+
+    const fetchGroceryList = async () => {
+        const resp = await fetch("http://localhost:4001/", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        if (resp.ok) {
+            const result = await resp.json();
+            setDatabase(result);
+        }
+    }
     return (
         <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4'>
             <Head></Head>
             <ListButtons></ListButtons>
-            <ListItems></ListItems>
+            <ListItems database={database}></ListItems>
             <NewButton></NewButton>
         </div>
     )
