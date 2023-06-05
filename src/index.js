@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-//Components
-import Head from './components/Head';
-import ListButtons from './components/ListButtons';
-import ListItems from './components/ListItems';
-import NewButton from './components/NewButton';
+import App from './components/App';
 
 //Tailwind
 import "./index.css";
@@ -13,12 +9,7 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4'>
-      <Head></Head>
-      <ListButtons></ListButtons>
-      <ListItems></ListItems>
-      <NewButton></NewButton>
-    </div>
+    <App></App>
   </React.StrictMode>
 );
 
