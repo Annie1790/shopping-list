@@ -11,27 +11,26 @@ import { useState } from "react";
 import db from "./testDB";
 
 const App = () => {
-    const [database, setDatabase] = useState(db);
+    const [groceryList, setGroceryList] = useState(db);
 
-
-    const fetchGroceryList = async () => {
-        const resp = await fetch("http://localhost:4001/", {
-            method: "GET",
-            mode: "cors",
-            headers: {
-                "Content-type": "application/json"
-            }
-        })
-        if (resp.ok) {
-            const result = await resp.json();
-            setDatabase(result);
-        }
-    }
+    // const fetchGroceryList = async () => {
+    //     const resp = await fetch("http://localhost:4001/", {
+    //         method: "GET",
+    //         mode: "cors",
+    //         headers: {
+    //             "Content-type": "application/json"
+    //         }
+    //     })
+    //     if (resp.ok) {
+    //         const result = await resp.json();
+    //         setGroceryList(result);
+    //     }
+    // }
     return (
         <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4'>
             <Head></Head>
             <ListButtons></ListButtons>
-            <ListItems database={database}></ListItems>
+            <ListItems database={groceryList}></ListItems>
             <NewButton></NewButton>
         </div>
     )
