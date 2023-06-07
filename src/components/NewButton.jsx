@@ -21,7 +21,6 @@ const NewButton = () => {
         const prompt = window.prompt("New item:", "e.g: bread");
         if (prompt !== "") {
             sendItem(prompt);
-            this.forceUpdate();
         } else {
             return
         }
