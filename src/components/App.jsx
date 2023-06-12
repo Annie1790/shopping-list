@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 
 const App = () => {
     const [groceryList, setGroceryList] = useState({});
-    const [name, setName] = useState("");
-    const [showInput, setShowInput] = useState(false);
 
     useEffect(() => {
         fetchGroceryList("")
@@ -40,11 +38,8 @@ const App = () => {
             <Head database={groceryList}></Head>
             <ListButtons fetch={fetchGroceryList}></ListButtons>
             <ListItems
-                database={groceryList}
-                value={name}
-                handleChange={(e) => { setName(e.target.value) }}
-                handleClick={() => { setShowInput(true) }}
-                showInput={showInput}
+                items={groceryList}
+                onItemEdited={(thisItem) => console.log(thisItem)}
             ></ListItems>
             <NewButton></NewButton>
         </div>
