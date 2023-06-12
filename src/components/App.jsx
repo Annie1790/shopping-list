@@ -11,44 +11,25 @@ const App = () => {
     const [groceryList, setGroceryList] = useState({});
 
     useEffect(() => {
-        fetchGroceryList()
+        fetchGroceryList("")
     }, [])
 
-    const fetchGroceryList = async (e) => {
-        if (e !== undefined) {
-            try {
-                const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?${e.target.value}`, {
-                    method: "GET",
-                    mode: "cors",
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                })
-                if (resp.ok) {
-                    const result = await resp.json();
-                    setGroceryList(result);
+    const fetchGroceryList = async (filter) => {
+        try {
+            const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?${filter}`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
                 }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setGroceryList(result);
             }
-            catch (error) {
-                console.log(error)
-            }
-        } else {
-            try {
-                const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?`, {
-                    method: "GET",
-                    mode: "cors",
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                })
-                if (resp.ok) {
-                    const result = await resp.json();
-                    setGroceryList(result);
-                }
-            }
-            catch (error) {
-                console.log(error)
-            }
+        }
+        catch (error) {
+            console.log(error)
         }
     };
 
