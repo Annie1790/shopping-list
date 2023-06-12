@@ -4,9 +4,9 @@ const ListItems = ({items, onEdited}) => {
 
     const returnGroceryList = () => {
         let arr = [];
-        for (let segment in items) {
+        for (let segment of items) {
             arr.push(
-                <ListItem key={items[segment].id} item={items[segment]} onEdited={onEdited} />
+                <ListItem key={segment.id} item={segment} onEdited={onEdited} />
             )
         }
         return arr;

@@ -8,7 +8,7 @@ import NewButton from './NewButton';
 import { useEffect, useState } from "react";
 
 const App = () => {
-    const [groceryList, setGroceryList] = useState({});
+    const [groceryList, setGroceryList] = useState([]);
 
     useEffect(() => {
         fetchGroceryList("")
@@ -39,7 +39,7 @@ const App = () => {
             <ListButtons fetch={fetchGroceryList}></ListButtons>
             <ListItems
                 items={groceryList}
-                onItemEdited={(thisItem) => console.log(thisItem)}
+                onEdited={(thisItem) => console.log(thisItem)}
             ></ListItems>
             <NewButton></NewButton>
         </div>

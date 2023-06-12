@@ -13,9 +13,8 @@ const ListItem = ({ item, onEdited }) => {
                         <input
                             className="flex flex-row items-center"
                             type="text"
-                            value={item.name}
-                            onChange={onEdited}
-                            onBlur={() => setShowInput(false)}
+                            defaultValue={item.name}
+                            onBlur={() => {setShowInput(false); onEdited(item);}}
                             autoFocus
                         />
                     </div>
