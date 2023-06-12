@@ -14,9 +14,9 @@ const App = () => {
         fetchGroceryList("")
     }, [])
 
-    const fetchGroceryList = async (e) => {
+    const fetchGroceryList = async (filter) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?${e.target?.value}`, {
+            const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?${filter}`, {
                 method: "GET",
                 mode: "cors",
                 headers: {
