@@ -8,7 +8,7 @@ import NewButton from './NewButton';
 import { useEffect, useState } from "react";
 
 const App = () => {
-    const [groceryList, setGroceryList] = useState({});
+    const [groceryList, setGroceryList] = useState([]);
 
     useEffect(() => {
         fetchGroceryList("")
@@ -37,7 +37,10 @@ const App = () => {
         <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
             <Head database={groceryList}></Head>
             <ListButtons fetch={fetchGroceryList}></ListButtons>
-            <ListItems database={groceryList}></ListItems>
+            <ListItems
+                items={groceryList}
+                onEdited={(thisItem) => console.log(thisItem)}
+            ></ListItems>
             <NewButton></NewButton>
         </div>
     )
