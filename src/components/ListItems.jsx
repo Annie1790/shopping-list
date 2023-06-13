@@ -13,7 +13,7 @@ const ListItems = ({items, onEdited}) => {
     }
 
     return (
-        <div className="grow">
+        <div className="grow flex flex-col gap-3">
             {returnGroceryList()}
         </div>
     )
