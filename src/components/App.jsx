@@ -79,7 +79,6 @@ const App = () => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify(id)
             })
             if (resp.ok) {
                 fetchGroceryList("isCompleted=false")
