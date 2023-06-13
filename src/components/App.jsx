@@ -71,6 +71,25 @@ const App = () => {
         }
     }
 
+    const deleteItemFromGroceryList = async (id) => {
+        try {
+            const resp = await fetch(`http://localhost:4000/shopItem/${id}`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(id)
+            })
+            if (resp.ok) {
+                fetchGroceryList("isCompleted=false")
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
             <Head database={groceryList}></Head>
@@ -78,6 +97,7 @@ const App = () => {
             <ListItems
                 items={groceryList}
                 onEdited={(item) => updateGroceryListItem(item)}
+                onDeleted={(id) => deleteItemFromGroceryList(id)}
             ></ListItems>
             <NewButton fetch={(item) => sendItem(item)}></NewButton>
         </div>

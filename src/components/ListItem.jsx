@@ -1,20 +1,8 @@
 import { useState } from "react";
 
-const ListItem = ({ item, onEdited }) => {
+const ListItem = ({ item, onEdited, onDeleted }) => {
     const [showInput, setShowInput] = useState(false);
-    const [groceryItem, setGroceryItem] = useState(item);
-
-    const setNewGroceryItem = (e) => {
-        if (e.target.value !== "") {
-            setGroceryItem({
-                name: e.target.value,
-                isCompleted: false,
-                id: item.id
-            })
-        } else {
-            return;
-        }
-    };
+    const [itemName, setItemName] = useState(item.name);
 
     const setTickBox = () => {
         onEdited({
@@ -23,6 +11,11 @@ const ListItem = ({ item, onEdited }) => {
             id: item.id
         })
     };
+
+    const sendNewName = () => {
+        setShowInput(false);
+        onEdited({ name: itemName || "???", isCompleted: item.isCompleted, id: item.id });
+    }
 
     const returnGroceryList = () => {
         return (
@@ -33,14 +26,14 @@ const ListItem = ({ item, onEdited }) => {
                             <input checked={item.isCompleted} onChange={() => { setTickBox(); }} type="checkbox" className="accent-pink-500 h-6 w-6"></input>
                         </label>
                         <input
-                            className="flex flex-row items-center"
+                            className="flex flex-row items-center grow"
                             type="text"
-                            onChange={setNewGroceryItem}
-                            defaultValue={item.name}
-                            onBlur={() => { setShowInput(false); onEdited(groceryItem) }}
+                            onChange={(e) => { setItemName(e.target.value) }}
+                            value={itemName}
+                            onBlur={sendNewName}
                             autoFocus
                         />
-                        <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z" /></svg>
                     </div>
                 ) : (
                     <div className="flex flex-row items-center gap-3">
@@ -54,7 +47,7 @@ const ListItem = ({ item, onEdited }) => {
                                 <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.name}</span>
                             )
                         }
-                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z"/></svg>
+                        <svg onClick={() => onDeleted(item.id)} xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z" /></svg>
                     </div>
                 )
                 }

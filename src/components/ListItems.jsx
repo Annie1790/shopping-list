@@ -1,12 +1,12 @@
 import ListItem from "./ListItem";
 
-const ListItems = ({items, onEdited}) => {
+const ListItems = ({items, onEdited, onDeleted}) => {
 
     const returnGroceryList = () => {
         let arr = [];
         for (let segment of items) {
             arr.push(
-                <ListItem key={segment.id} item={segment} onEdited={onEdited} />
+                <ListItem key={segment.id} item={segment} onDeleted={onDeleted} onEdited={onEdited} />
             )
         }
         return arr;
