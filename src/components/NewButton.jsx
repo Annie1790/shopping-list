@@ -1,9 +1,9 @@
-const NewButton = ({ fetch }) => {
+const NewButton = ({ onAdd }) => {
 
     const addNewItem = () => {
         const prompt = window.prompt("New item:", "e.g: bread");
         if (prompt !== "") {
-            fetch(prompt);
+            onAdd(prompt);
         } else {
             return
         }

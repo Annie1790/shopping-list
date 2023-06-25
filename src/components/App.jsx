@@ -14,7 +14,7 @@ const App = () => {
         fetchGroceryList("isCompleted=false")
     }, []);
 
-    const sendItem = async (data) => {
+    const sendName = async (prompt) => {
         try {
             const resp = await fetch("http://localhost:4000/shopItem", {
                 method: "POST",
@@ -22,7 +22,7 @@ const App = () => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify({ name: data, isCompleted: false })
+                body: JSON.stringify({ name: prompt, isCompleted: false })
             })
             if (resp.ok) {
                 fetchGroceryList("isCompleted=false");
@@ -98,7 +98,7 @@ const App = () => {
                 onEdited={(item) => updateGroceryListItem(item)}
                 onDeleted={(id) => deleteItemFromGroceryList(id)}
             ></ListItems>
-            <NewButton fetch={(item) => sendItem(item)}></NewButton>
+            <NewButton onAdd={(name) => sendName(name)}></NewButton>
         </div>
     )
 };
