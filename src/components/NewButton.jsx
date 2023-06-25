@@ -1,26 +1,9 @@
-const NewButton = () => {
-
-    const sendItem = async (data) => {
-        try {
-            const resp = await fetch("http://localhost:4000/shopItem", {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify({name: data, isCompleted: false})
-            })
-            const result = await resp.json();
-        }
-        catch (error) {
-            console.error(error)
-        }
-    }
+const NewButton = ({ onAdd }) => {
 
     const addNewItem = () => {
         const prompt = window.prompt("New item:", "e.g: bread");
         if (prompt !== "") {
-            sendItem(prompt);
+            onAdd(prompt);
         } else {
             return
         }

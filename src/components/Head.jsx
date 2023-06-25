@@ -11,7 +11,7 @@ const Head = ({database}) => {
                 </button>
             </div>
             <div>
-                <h1 className="text-3xl">Shopping List({database.length})</h1>
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Shopping List({database.length})</h1>
             </div>
         </div>
     )
