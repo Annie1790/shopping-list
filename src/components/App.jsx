@@ -22,7 +22,7 @@ const App = () => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify({ name: prompt, isCompleted: false })
+                body: JSON.stringify(prompt)
             })
             if (resp.ok) {
                 fetchGroceryList("isCompleted=false");
@@ -98,7 +98,7 @@ const App = () => {
                 onEdited={(item) => updateGroceryListItem(item)}
                 onDeleted={(id) => deleteItemFromGroceryList(id)}
             ></ListItems>
-            <NewButton onAdd={(name) => sendName(name)}></NewButton>
+            <NewButton onAdd={(name) => sendName({ name: name, isCompleted: false })}></NewButton>
         </div>
     )
 };
