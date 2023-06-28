@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import DeleteGroceryItembutton from "./DeleteGroceryItemButton";
+
 const ListItem = ({ item, onEdited, onDeleted }) => {
     const [showInput, setShowInput] = useState(false);
     const [itemName, setItemName] = useState(item.name);
@@ -33,7 +35,7 @@ const ListItem = ({ item, onEdited, onDeleted }) => {
                             onBlur={sendNewName}
                             autoFocus
                         />
-                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z" /></svg>
+                        <DeleteGroceryItembutton item={item} />
                     </div>
                 ) : (
                     <div className="flex flex-row items-center gap-3">
@@ -47,7 +49,7 @@ const ListItem = ({ item, onEdited, onDeleted }) => {
                                 <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.name}</span>
                             )
                         }
-                        <svg onClick={() => onDeleted(item.id)} xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z" /></svg>
+                        <DeleteGroceryItembutton item={item} deleteFunc={onDeleted} />
                     </div>
                 )
                 }
