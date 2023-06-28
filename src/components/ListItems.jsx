@@ -1,4 +1,4 @@
-import ListItem from "./ListItem";
+import ListItem from "./listitems/ListItem";
 
 const ListItems = ({items, onEdited, onDeleted}) => {
 
