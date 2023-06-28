@@ -1,8 +1,13 @@
 import { useState } from "react";
 
+import DeleteGroceryItembutton from "./DeleteGroceryItemButton";
+import TagButton from "./TagButton";
+import TagModal from "./TagModal";
+
 const ListItem = ({ item, onEdited, onDeleted }) => {
     const [showInput, setShowInput] = useState(false);
     const [itemName, setItemName] = useState(item.name);
+    const [showTagModal, setShowTagModal] = useState(false);
 
     const setTickBox = () => {
         onEdited({
@@ -33,7 +38,9 @@ const ListItem = ({ item, onEdited, onDeleted }) => {
                             onBlur={sendNewName}
                             autoFocus
                         />
-                        <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z" /></svg>
+                        {showTagModal && <TagModal />}
+                        <TagButton setter={setShowTagModal} />
+                        <DeleteGroceryItembutton item={item} />
                     </div>
                 ) : (
                     <div className="flex flex-row items-center gap-3">
@@ -47,10 +54,15 @@ const ListItem = ({ item, onEdited, onDeleted }) => {
                                 <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.name}</span>
                             )
                         }
-                        <svg onClick={() => onDeleted(item.id)} xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="40" viewBox="0 -960 960 960" width="40"><path d="M200-450v-60h560v60H200Z" /></svg>
+                        {showTagModal && <TagModal setter={setShowTagModal} />}
+                        <TagButton setter={setShowTagModal} />
+                        <DeleteGroceryItembutton item={item} deleteFunc={onDeleted} />
                     </div>
                 )
                 }
+                <div className="flex flex-row pl-6 pb-0.5 pr-6">
+                    <div className="border border-gray-200 rounded-full w-min p-0.5 text-gray-600">#vegetable</div>
+                </div>
             </li>
         )
 
