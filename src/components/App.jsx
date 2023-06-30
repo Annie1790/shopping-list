@@ -14,6 +14,22 @@ const App = () => {
         fetchGroceryList("isCompleted=false")
     }, []);
 
+    const sendNewTag = async (object) => {
+        try {
+            const resp = await fetch("http://localhost:4000/tags", {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(object)
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     const sendName = async (prompt) => {
         try {
             const resp = await fetch("http://localhost:4000/shopItem", {
@@ -97,6 +113,7 @@ const App = () => {
                 items={groceryList}
                 onEdited={(item) => updateGroceryListItem(item)}
                 onDeleted={(id) => deleteItemFromGroceryList(id)}
+                sendNewTag={(object) => sendNewTag(object)}
             ></ListItems>
             <NewButton onAdd={(name) => sendName({ name: name, isCompleted: false })}></NewButton>
         </div>

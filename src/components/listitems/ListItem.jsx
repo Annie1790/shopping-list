@@ -4,7 +4,7 @@ import DeleteGroceryItembutton from "./DeleteGroceryItemButton";
 import TagButton from "./TagButton";
 import TagModal from "./TagModal";
 
-const ListItem = ({ item, onEdited, onDeleted }) => {
+const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
     const [showInput, setShowInput] = useState(false);
     const [itemName, setItemName] = useState(item.name);
     const [showTagModal, setShowTagModal] = useState(false);
@@ -38,7 +38,7 @@ const ListItem = ({ item, onEdited, onDeleted }) => {
                             onBlur={sendNewName}
                             autoFocus
                         />
-                        {showTagModal && <TagModal />}
+                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag} />}
                         <TagButton setter={setShowTagModal} />
                         <DeleteGroceryItembutton item={item} />
                     </div>
@@ -54,7 +54,7 @@ const ListItem = ({ item, onEdited, onDeleted }) => {
                                 <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.name}</span>
                             )
                         }
-                        {showTagModal && <TagModal setter={setShowTagModal} />}
+                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag}/>}
                         <TagButton setter={setShowTagModal} />
                         <DeleteGroceryItembutton item={item} deleteFunc={onDeleted} />
                     </div>

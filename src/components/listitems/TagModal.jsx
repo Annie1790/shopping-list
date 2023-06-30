@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TagModal = ({ setter }) => {
+const TagModal = ({ setter, item, sendNewTag }) => {
 
     const [tagName, setTagName] = useState("");
     const [tagColor, setTagColor] = useState("");
@@ -36,13 +36,19 @@ const TagModal = ({ setter }) => {
                             <div className=" flex flex-row gap-2 border border-gray-200 rounded-full w-min p-0.5 text-gray-600">
                                 <p>#vegetable</p>
                                 <button
-                                className="font-bold pr-1"
+                                    className="font-bold pr-1"
                                 >x</button>
                             </div>
                         </div>
                     </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
-                        <button className="p-2">Save changes</button>
+                        <button
+                            onClick={() => sendNewTag({
+                                id: item.id,
+                                tag_name: tagName,
+                                color: tagColor
+                            })}
+                            className="p-2">Save changes</button>
                     </div>
                 </div>
             </div>
