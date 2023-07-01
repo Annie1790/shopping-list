@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import TagItem from "./TagItem";
+
 const TagModal = ({ setter, item, sendNewTag }) => {
 
     const [tagName, setTagName] = useState("");
@@ -33,12 +35,7 @@ const TagModal = ({ setter, item, sendNewTag }) => {
                     </div>
                     <div className="flex flex-row overflow-x-auto">
                         <div className="flex flex-row pl-6 pb-0.5 pr-6">
-                            <div className=" flex flex-row gap-2 border border-gray-200 rounded-full w-min p-0.5 text-gray-600">
-                                <p>#vegetable</p>
-                                <button
-                                    className="font-bold pr-1"
-                                >x</button>
-                            </div>
+                            <TagItem />
                         </div>
                     </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
