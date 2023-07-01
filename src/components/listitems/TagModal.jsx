@@ -7,6 +7,16 @@ const TagModal = ({ setter, item, sendNewTag }) => {
     const [tagName, setTagName] = useState("");
     const [tagColor, setTagColor] = useState("");
 
+    const returnTagItems = () => {
+        let arr = [];
+        for (let segment of item.tags) {
+            arr.push(
+                <TagItem key={segment.id} item={segment}/>
+            )
+        }
+        return arr;
+    }
+
     return (
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -34,9 +44,9 @@ const TagModal = ({ setter, item, sendNewTag }) => {
                         </input>
                     </div>
                     <div className="flex flex-row overflow-x-auto">
-                        <div className="flex flex-row pl-6 pb-0.5 pr-6">
-                            <TagItem />
-                        </div>
+                        <ul className="flex flex-row pl-6 pb-0.5 pr-6">
+                            {returnTagItems(    )}
+                        </ul>
                     </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                         <button

@@ -7,6 +7,9 @@ import NewButton from './NewButton';
 //React Hooks
 import { useEffect, useState } from "react";
 
+let HOST = "192.168.1.116";
+let LOCALHOST = "localhost";
+
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
 
@@ -16,7 +19,7 @@ const App = () => {
 
     const sendNewTag = async (object) => {
         try {
-            const resp = await fetch("http://localhost:4000/tags", {
+            const resp = await fetch(`http://${LOCALHOST}:4000/tags`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -24,6 +27,9 @@ const App = () => {
                 },
                 body: JSON.stringify(object)
             })
+            if (resp.ok) {
+                fetchGroceryList("isCompleted=false");
+            }
         }
         catch (error) {
             console.log(error)
@@ -32,7 +38,7 @@ const App = () => {
 
     const sendName = async (prompt) => {
         try {
-            const resp = await fetch("http://localhost:4000/shopItem", {
+            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -51,7 +57,7 @@ const App = () => {
 
     const fetchGroceryList = async (filter) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?${filter}`, {
+            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem/findByStatus?${filter}`, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -70,7 +76,7 @@ const App = () => {
 
     const updateGroceryListItem = async (item) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem`, {
+            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem`, {
                 method: "PUT",
                 mode: "cors",
                 headers: {
@@ -89,7 +95,7 @@ const App = () => {
 
     const deleteItemFromGroceryList = async (id) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem/${id}`, {
+            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem/${id}`, {
                 method: "DELETE",
                 mode: "cors",
                 headers: {

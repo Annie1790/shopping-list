@@ -3,6 +3,7 @@ import { useState } from "react";
 import DeleteGroceryItembutton from "./DeleteGroceryItemButton";
 import TagButton from "./TagButton";
 import TagModal from "./TagModal";
+import TagItem from "./TagItem";
 
 const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
     const [showInput, setShowInput] = useState(false);
@@ -20,7 +21,17 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
     const sendNewName = () => {
         setShowInput(false);
         onEdited({ name: itemName || "???", isCompleted: item.isCompleted, id: item.id });
-    }
+    };
+
+    const returnTagItems = () => {
+        let arr = [];
+        for (let segment of item.tags) {
+            arr.push(
+                <TagItem key={segment.id} item={segment}/>
+            )
+        }
+        return arr;
+    };
 
     const returnGroceryList = () => {
         return (
@@ -60,9 +71,9 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
                     </div>
                 )
                 }
-                <div className="flex flex-row pl-6 pb-0.5 pr-6">
-                    <div className="border border-gray-200 rounded-full w-min p-0.5 text-gray-600">#vegetable</div>
-                </div>
+                <ul className="flex flex-row pl-6 pb-0.5 pr-6">
+                {returnTagItems()}
+                </ul>
             </li>
         )
 

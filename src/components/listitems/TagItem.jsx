@@ -1,11 +1,11 @@
-const TagItem = () => {
+const TagItem = ({item}) => {
     return (
-        <div className=" flex flex-row gap-2 border border-gray-200 rounded-full w-min p-0.5 text-gray-600">
-            <p>#vegetable</p>
+        <li style={{backgroundColor: item.color}} className=" flex flex-row gap-2 border border-gray-200 rounded-full w-min px-1 text-gray-600">
+            <p>{item.name}</p>
             <button
                 className="font-bold pr-1"
             >x</button>
-        </div>
+        </li>
     )
 };
 
