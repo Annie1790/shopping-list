@@ -7,15 +7,17 @@ import NewButton from './NewButton';
 //React Hooks
 import { useEffect, useState } from "react";
 
-let HOST = "192.168.1.116";
 let LOCALHOST = "localhost";
 
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
+    const [tagCategories, setTagCategories] = useState(["vegetable", "fruit"]);
 
     useEffect(() => {
         fetchGroceryList("isCompleted=false")
     }, []);
+    //Maybe we can change useEffect to React Query?
+    //useQuery?
 
     const sendNewTag = async (object) => {
         try {
@@ -109,7 +111,26 @@ const App = () => {
         catch (error) {
             console.log(error)
         }
-    }
+    };
+
+    // const getArrayOfTagCategories = async () => {
+    //     try {
+    //         const resp = await fetch(`http://${LOCALHOST}:4000/tagCategories`, {
+    //             method: "GET",
+    //             mode: "cors",
+    //             headers: {
+    //                 "Content-type": "application/json"
+    //             }
+    //         })
+    //         if (resp.ok) {
+    //             const result = await resp.json();
+    //             setTagCategories(result);
+    //         }
+    //     }
+    //     catch(error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return (
         <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
@@ -120,8 +141,9 @@ const App = () => {
                 onEdited={(item) => updateGroceryListItem(item)}
                 onDeleted={(id) => deleteItemFromGroceryList(id)}
                 sendNewTag={(object) => sendNewTag(object)}
+                arrayOfTagCategories={tagCategories}
             ></ListItems>
-            <NewButton onAdd={(name) => sendName({ name: name, isCompleted: false })}></NewButton>
+            <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })}></NewButton>
         </div>
     )
 };

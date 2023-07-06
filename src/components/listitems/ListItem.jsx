@@ -1,33 +1,33 @@
 import { useState } from "react";
 
 import DeleteGroceryItembutton from "./DeleteGroceryItemButton";
-import TagButton from "./TagButton";
-import TagModal from "./TagModal";
-import TagItem from "./TagItem";
+import TagButton from "./tagComponents/TagButton";
+import TagModal from "./tagComponents/TagModal";
+import TagItem from "./tagComponents/TagItem";
 
-const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
+const ListItem = ({ item, onEdited, onDeleted, sendNewTag, arrayOfTagCategories }) => {
     const [showInput, setShowInput] = useState(false);
-    const [itemName, setItemName] = useState(item.name);
+    const [itemName, setItemName] = useState(item.grocery_name);
     const [showTagModal, setShowTagModal] = useState(false);
 
     const setTickBox = () => {
         onEdited({
-            name: item.name,
+            name: item.grocery_name,
             isCompleted: !item.isCompleted,
-            id: item.id
+            id: item.grocery_id
         })
     };
 
     const sendNewName = () => {
         setShowInput(false);
-        onEdited({ name: itemName || "???", isCompleted: item.isCompleted, id: item.id });
+        onEdited({ name: itemName || "???", is_completed: item.is_completed, id: item.grocery_id });
     };
 
     const returnTagItems = () => {
         let arr = [];
-        for (let segment of item.tags) {
+        for (let segment of item.tags_json) {
             arr.push(
-                <TagItem key={segment.id} item={segment}/>
+                <TagItem key={segment.tag_id} item={segment}/>
             )
         }
         return arr;
@@ -39,7 +39,7 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
                 {showInput ? (
                     <div className="flex flex-row items-center gap-3">
                         <label className="flex items-center">
-                            <input checked={item.isCompleted} onChange={() => { setTickBox(); }} type="checkbox" className="accent-pink-500 h-6 w-6"></input>
+                            <input checked={item.is_completed} onChange={() => { setTickBox(); }} type="checkbox" className="accent-pink-500 h-6 w-6"></input>
                         </label>
                         <input
                             className="flex flex-row items-center grow"
@@ -49,23 +49,23 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag }) => {
                             onBlur={sendNewName}
                             autoFocus
                         />
-                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag} />}
+                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag} arrayOfTagCategories={arrayOfTagCategories} />}
                         <TagButton setter={setShowTagModal} />
                         <DeleteGroceryItembutton item={item} />
                     </div>
                 ) : (
                     <div className="flex flex-row items-center gap-3">
                         <label className="flex items-center">
-                            <input checked={item.isCompleted} onChange={() => { setTickBox(); }} type="checkbox" className="accent-pink-500 h-6 w-6"></input>
+                            <input checked={item.is_completed} onChange={() => { setTickBox(); }} type="checkbox" className="accent-pink-500 h-6 w-6"></input>
                         </label>
                         {
-                            item.isCompleted ? (
-                                <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl line-through decoration-slate-500">{item.name}</span>
+                            item.is_completed ? (
+                                <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl line-through decoration-slate-500">{item.grocery_name}</span>
                             ) : (
-                                <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.name}</span>
+                                <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.grocery_name}</span>
                             )
                         }
-                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag}/>}
+                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag} arrayOfTagCategories={arrayOfTagCategories}/>}
                         <TagButton setter={setShowTagModal} />
                         <DeleteGroceryItembutton item={item} deleteFunc={onDeleted} />
                     </div>

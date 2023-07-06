@@ -1,21 +1,21 @@
 import { useState } from "react";
 
 import TagItem from "./TagItem";
+import TagCategoryOption from "./TagCategoryOption";
 
-const TagModal = ({ setter, item, sendNewTag }) => {
+const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
 
-    const [tagName, setTagName] = useState("");
-    const [tagColor, setTagColor] = useState("");
+    const [tagCategory, setTagCategory] = useState("");
 
-    const returnTagItems = () => {
-        let arr = [];
-        for (let segment of item.tags) {
-            arr.push(
-                <TagItem key={segment.id} item={segment}/>
-            )
-        }
-        return arr;
-    }
+    // const returnTagItems = () => {
+    //     let arr = [];
+    //     for (let segment of item.tags_json) {
+    //         arr.push(
+    //             <TagItem key={segment.id} item={segment} />
+    //         )
+    //     }
+    //     return arr;
+    // }
 
     return (
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm">
@@ -27,34 +27,25 @@ const TagModal = ({ setter, item, sendNewTag }) => {
                             className="shadow-sm text-2xl font-bold text-gray-400 p-1"
                             onClick={() => setter(false)}>X</button>
                     </div>
-                    <div className="relative p-8 flex text-center justify-around">
-                        <input
-                            className="shadow-sm"
-                            type="text"
-                            placeholder="New tag..."
-                            onChange={(e) => { setTagName(e.target.value) }}
-                        >
-                        </input>
-                        <input
-                            className=""
-                            type="color"
-                            onChange={(e) => {
-                                setTagColor(e.target.value);
-                            }}>
-                        </input>
+                    <p className="relative px-12 p-4 flex text-center justify-around">Select from the list:</p>
+                    <div className="relative p-4 flex text-center justify-around">
+                        <select id="tags" name="tags" onChange={(e) => { setTagCategory(e.target.value) }}>
+                            <TagCategoryOption arrayOfTagCategories={arrayOfTagCategories} />
+                        </select>
                     </div>
                     <div className="flex flex-row overflow-x-auto">
                         <ul className="flex flex-row pl-6 pb-0.5 pr-6">
-                            {returnTagItems(    )}
+                            {/* {returnTagItems()} */}
                         </ul>
                     </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                         <button
-                            onClick={() => sendNewTag({
-                                id: item.id,
-                                tag_name: tagName,
-                                color: tagColor
-                            })}
+                            onClick={() => {
+                                sendNewTag({
+                                    id: item.id,
+                                    tag_category: tagCategory
+                                });
+                            }}
                             className="p-2">Save changes</button>
                     </div>
                 </div>
