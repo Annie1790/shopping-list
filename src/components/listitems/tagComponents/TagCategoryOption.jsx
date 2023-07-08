@@ -4,7 +4,7 @@ const TagCategoryOption = ({arrayOfTagCategories}) => {
         let result = [];
         for (let segment of arrayOfTagCategories) {
             result.push(
-                <option value={segment}>{segment}</option>
+                <option key={segment.tag_id} value={segment.tag_id}>{segment.tag_name}</option>
             )
         }
         return result;

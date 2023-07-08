@@ -1,21 +1,10 @@
 import { useState } from "react";
 
-import TagItem from "./TagItem";
 import TagCategoryOption from "./TagCategoryOption";
 
 const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
 
-    const [tagCategory, setTagCategory] = useState("");
-
-    // const returnTagItems = () => {
-    //     let arr = [];
-    //     for (let segment of item.tags_json) {
-    //         arr.push(
-    //             <TagItem key={segment.id} item={segment} />
-    //         )
-    //     }
-    //     return arr;
-    // }
+    const [tagCategory, setTagCategory] = useState(1);
 
     return (
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm">
@@ -42,11 +31,11 @@ const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
                         <button
                             onClick={() => {
                                 sendNewTag({
-                                    id: item.id,
-                                    tag_category: tagCategory
+                                    grocery_id: item.grocery_id,
+                                    tag_id: tagCategory
                                 });
                             }}
-                            className="p-2">Save changes</button>
+                            className="p-2">Add tag</button>
                     </div>
                 </div>
             </div>

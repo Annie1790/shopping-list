@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import DeleteGroceryItembutton from "./DeleteGroceryItemButton";
 import TagButton from "./tagComponents/TagButton";
 import TagModal from "./tagComponents/TagModal";
 import TagItem from "./tagComponents/TagItem";
 
-const ListItem = ({ item, onEdited, onDeleted, sendNewTag, arrayOfTagCategories }) => {
+const ListItem = ({ item, onEdited, onDeleted, sendNewTag, arrayOfTagCategories, sendTagId }) => {
     const [showInput, setShowInput] = useState(false);
     const [itemName, setItemName] = useState(item.grocery_name);
     const [showTagModal, setShowTagModal] = useState(false);
+    const groceryId = useRef(item.grocery_id);
 
     const setTickBox = () => {
         onEdited({
-            name: item.grocery_name,
-            isCompleted: !item.isCompleted,
-            id: item.grocery_id
+            grocery_name: item.grocery_name,
+            is_completed: !item.is_completed,
+            grocery_id: item.grocery_id
         })
     };
 
     const sendNewName = () => {
         setShowInput(false);
-        onEdited({ name: itemName || "???", is_completed: item.is_completed, id: item.grocery_id });
+        onEdited({ grocery_name: itemName || "???", is_completed: item.is_completed, grocery_id: item.grocery_id });
     };
 
     const returnTagItems = () => {
         let arr = [];
         for (let segment of item.tags_json) {
             arr.push(
-                <TagItem key={segment.tag_id} item={segment}/>
+                <TagItem key={segment.tag_id} tags={segment} sendTagId={sendTagId} groceryForOnClick={groceryId.current} />
             )
         }
         return arr;
@@ -49,7 +50,12 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag, arrayOfTagCategories 
                             onBlur={sendNewName}
                             autoFocus
                         />
-                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag} arrayOfTagCategories={arrayOfTagCategories} />}
+                        {showTagModal && <TagModal
+                            setter={setShowTagModal}
+                            item={item}
+                            sendNewTag={sendNewTag}
+                            arrayOfTagCategories={arrayOfTagCategories}
+                        />}
                         <TagButton setter={setShowTagModal} />
                         <DeleteGroceryItembutton item={item} />
                     </div>
@@ -65,14 +71,19 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag, arrayOfTagCategories 
                                 <span onClick={() => setShowInput(true)} className="tracking-normal grow ml-1 text-xl">{item.grocery_name}</span>
                             )
                         }
-                        {showTagModal && <TagModal setter={setShowTagModal} item={item} sendNewTag={sendNewTag} arrayOfTagCategories={arrayOfTagCategories}/>}
+                        {showTagModal && <TagModal
+                            setter={setShowTagModal}
+                            item={item}
+                            sendNewTag={sendNewTag}
+                            arrayOfTagCategories={arrayOfTagCategories}
+                        />}
                         <TagButton setter={setShowTagModal} />
                         <DeleteGroceryItembutton item={item} deleteFunc={onDeleted} />
                     </div>
                 )
                 }
                 <ul className="flex flex-row pl-6 pb-0.5 pr-6">
-                {returnTagItems()}
+                    {returnTagItems()}
                 </ul>
             </li>
         )
