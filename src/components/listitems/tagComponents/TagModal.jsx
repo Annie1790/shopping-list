@@ -4,7 +4,7 @@ import TagCategoryOption from "./TagCategoryOption";
 
 const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
 
-    const [tagCategory, setTagCategory] = useState(1);
+    const [tagCategory, setTagCategory] = useState(arrayOfTagCategories[0].tag_id);
 
     return (
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm">
@@ -18,7 +18,7 @@ const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
                     </div>
                     <p className="relative px-12 p-4 flex text-center justify-around">Select from the list:</p>
                     <div className="relative p-4 flex text-center justify-around">
-                        <select id="tags" name="tags" onChange={(e) => { setTagCategory(e.target.value) }}>
+                        <select id="tags" name="tags" onChange={(e) => { setTagCategory(parseInt(e.target.value)) }}>
                             <TagCategoryOption arrayOfTagCategories={arrayOfTagCategories} />
                         </select>
                     </div>
