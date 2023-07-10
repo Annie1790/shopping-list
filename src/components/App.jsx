@@ -7,7 +7,7 @@ import NewButton from './NewButton';
 //React Hooks
 import { useEffect, useState } from "react";
 
-let LOCALHOST = "localhost";
+let API_SERVER_PREFIX = "http://localhost:4000";
 
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
@@ -22,7 +22,7 @@ const App = () => {
 
     const sendNewTag = async (object) => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/tags`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}tags`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -41,7 +41,7 @@ const App = () => {
 
     const sendTagId = async (object) => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/tags`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/tags`, {
                 method: "DELETE",
                 mode: "cors",
                 headers: {
@@ -60,7 +60,7 @@ const App = () => {
 
     const sendName = async (prompt) => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -79,7 +79,7 @@ const App = () => {
 
     const fetchGroceryList = async (filter) => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem/findByStatus?${filter}`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem/findByStatus?${filter}`, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -98,7 +98,7 @@ const App = () => {
 
     const updateGroceryListItem = async (item) => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem`, {
                 method: "PUT",
                 mode: "cors",
                 headers: {
@@ -117,7 +117,7 @@ const App = () => {
 
     const deleteItemFromGroceryList = async (id) => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/shopItem/${id}`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem/${id}`, {
                 method: "DELETE",
                 mode: "cors",
                 headers: {
@@ -135,7 +135,7 @@ const App = () => {
 
     const getArrayOfTagCategories = async () => {
         try {
-            const resp = await fetch(`http://${LOCALHOST}:4000/tags`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/tags`, {
                 method: "GET",
                 mode: "cors",
                 headers: {
