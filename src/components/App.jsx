@@ -7,16 +7,22 @@ import NewButton from './NewButton';
 //React Hooks
 import { useEffect, useState } from "react";
 
+let API_SERVER_PREFIX = "http://localhost:4000";
+
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
+    const [tagCategories, setTagCategories] = useState(["example"]);
 
     useEffect(() => {
-        fetchGroceryList("isCompleted=false")
+        fetchGroceryList("isCompleted=false");
+        getArrayOfTagCategories();
     }, []);
+    //Maybe we can change useEffect to React Query?
+    //useQuery?
 
     const sendNewTag = async (object) => {
         try {
-            const resp = await fetch("http://localhost:4000/tags", {
+            const resp = await fetch(`${API_SERVER_PREFIX}tags`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -24,15 +30,37 @@ const App = () => {
                 },
                 body: JSON.stringify(object)
             })
+            if (resp.ok) {
+                fetchGroceryList("is_completed=false");
+            }
         }
         catch (error) {
             console.log(error)
+        }
+    };
+
+    const sendTagId = async (object) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/tags`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(object)
+            })
+            if (resp.ok) {
+                fetchGroceryList("is_completed=false")
+            }
+        }
+        catch (error) {
+            console.log(error);
         }
     }
 
     const sendName = async (prompt) => {
         try {
-            const resp = await fetch("http://localhost:4000/shopItem", {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -41,7 +69,7 @@ const App = () => {
                 body: JSON.stringify(prompt)
             })
             if (resp.ok) {
-                fetchGroceryList("isCompleted=false");
+                fetchGroceryList("is_completed=false");
             }
         }
         catch (error) {
@@ -51,7 +79,7 @@ const App = () => {
 
     const fetchGroceryList = async (filter) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem/findByStatus?${filter}`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem/findByStatus?${filter}`, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -70,7 +98,7 @@ const App = () => {
 
     const updateGroceryListItem = async (item) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem`, {
                 method: "PUT",
                 mode: "cors",
                 headers: {
@@ -79,7 +107,7 @@ const App = () => {
                 body: JSON.stringify(item)
             })
             if (resp.ok) {
-                fetchGroceryList("isCompleted=false");
+                fetchGroceryList("is_completed=false");
             }
         }
         catch (error) {
@@ -89,7 +117,7 @@ const App = () => {
 
     const deleteItemFromGroceryList = async (id) => {
         try {
-            const resp = await fetch(`http://localhost:4000/shopItem/${id}`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/shopItem/${id}`, {
                 method: "DELETE",
                 mode: "cors",
                 headers: {
@@ -97,7 +125,26 @@ const App = () => {
                 },
             })
             if (resp.ok) {
-                fetchGroceryList("isCompleted=false")
+                fetchGroceryList("is_completed=false")
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    };
+
+    const getArrayOfTagCategories = async () => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/tags`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setTagCategories(result);
             }
         }
         catch (error) {
@@ -114,8 +161,10 @@ const App = () => {
                 onEdited={(item) => updateGroceryListItem(item)}
                 onDeleted={(id) => deleteItemFromGroceryList(id)}
                 sendNewTag={(object) => sendNewTag(object)}
+                sendTagId={(object) => sendTagId(object)}
+                arrayOfTagCategories={tagCategories}
             ></ListItems>
-            <NewButton onAdd={(name) => sendName({ name: name, isCompleted: false })}></NewButton>
+            <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })}></NewButton>
         </div>
     )
 };
