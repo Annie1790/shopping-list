@@ -22,7 +22,7 @@ const App = () => {
 
     const sendNewTag = async (object) => {
         try {
-            const resp = await fetch(`${API_SERVER_PREFIX}tags`, {
+            const resp = await fetch(`${API_SERVER_PREFIX}/tags`, {
                 method: "POST",
                 mode: "cors",
                 headers: {
