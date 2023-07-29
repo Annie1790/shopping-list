@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    padding: calc(50px + env(safe-area-inset-top)px);
-}
-
 #root {
     height: 100svh;
     display: grid;
