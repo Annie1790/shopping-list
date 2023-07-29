@@ -7,7 +7,7 @@ import NewButton from './NewButton';
 //React Hooks
 import { useEffect, useState } from "react";
 
-let API_SERVER_PREFIX = "http://localhost:4000";
+const API_SERVER_PREFIX = process.env.REACT_APP_API_SERVER_PREFIX;
 
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
