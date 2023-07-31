@@ -1,8 +1,8 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 const Navigation = () => {
 
-    const [recommended, setRecommended] = useState([]);
+    // const [recommended, setRecommended] = useState([]);
 
     return (
         <div className='flex flex-col col-start-2 shadow-xl gap-4 overflow-y-scroll no-scrollbar bg-navBg'>

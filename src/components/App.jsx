@@ -3,7 +3,7 @@ import Head from './shopping_list/Head';
 import CompletedStatusBar from './shopping_list/CompletedStatusBar';
 import ListItemsFrame from './shopping_list/ListItemsFrame';
 import NewButton from './shopping_list/NewButton';
-import Navigation from "./main_menu/Navigation"
+// import Navigation from "./main_menu/Navigation"
 
 //React Hooks
 import { useEffect, useState } from "react";
