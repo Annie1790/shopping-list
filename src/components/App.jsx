@@ -1,8 +1,9 @@
 //Components
-import Head from './Head';
-import ListButtons from './ListButtons';
-import ListItems from './ListItems';
-import NewButton from './NewButton';
+import Head from './shopping_list/Head';
+import CompletedStatusBar from './shopping_list/CompletedStatusBar';
+import ListItemsFrame from './shopping_list/ListItemsFrame';
+import NewButton from './shopping_list/NewButton';
+import Navigation from "./main_menu/Navigation"
 
 //React Hooks
 import { useEffect, useState } from "react";
@@ -17,8 +18,6 @@ const App = () => {
         fetchGroceryList("isCompleted=false");
         getArrayOfTagCategories();
     }, []);
-    //Maybe we can change useEffect to React Query?
-    //useQuery?
 
     const sendNewTag = async (object) => {
         try {
@@ -152,20 +151,27 @@ const App = () => {
         }
     }
 
+    const ReturnShoppingList = () => {
+        return (
+            <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
+                <Head database={groceryList} />
+                <CompletedStatusBar fetch={fetchGroceryList} />
+                <ListItemsFrame
+                    items={groceryList}
+                    onEdited={(item) => updateGroceryListItem(item)}
+                    onDeleted={(id) => deleteItemFromGroceryList(id)}
+                    sendNewTag={(object) => sendNewTag(object)}
+                    sendTagId={(object) => sendTagId(object)}
+                    arrayOfTagCategories={tagCategories}
+                />
+                <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })} />
+            </div>
+        )
+    }
+
     return (
-        <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
-            <Head database={groceryList}></Head>
-            <ListButtons fetch={fetchGroceryList}></ListButtons>
-            <ListItems
-                items={groceryList}
-                onEdited={(item) => updateGroceryListItem(item)}
-                onDeleted={(id) => deleteItemFromGroceryList(id)}
-                sendNewTag={(object) => sendNewTag(object)}
-                sendTagId={(object) => sendTagId(object)}
-                arrayOfTagCategories={tagCategories}
-            ></ListItems>
-            <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })}></NewButton>
-        </div>
+        // <Navigation />
+        <ReturnShoppingList />
     )
 };
 

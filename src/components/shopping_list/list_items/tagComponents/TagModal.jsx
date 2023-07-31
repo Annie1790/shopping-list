@@ -22,11 +22,6 @@ const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
                             <TagCategoryOption arrayOfTagCategories={arrayOfTagCategories} />
                         </select>
                     </div>
-                    <div className="flex flex-row overflow-x-auto">
-                        <ul className="flex flex-row pl-6 pb-0.5 pr-6">
-                            {/* {returnTagItems()} */}
-                        </ul>
-                    </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                         <button
                             onClick={() => {

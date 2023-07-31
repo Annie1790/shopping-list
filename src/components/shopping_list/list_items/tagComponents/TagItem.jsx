@@ -6,7 +6,7 @@ const TagItem = ({ tags, groceryForOnClick, sendTagId }) => {
     const groceryId = useRef(groceryForOnClick);
 
     return (
-        <li style={{ backgroundColor: tags.tag_bg_color, color: tags.tag_text_color }} className=" flex flex-row gap-2 border border-gray-200 rounded-full w-min px-1 text-gray-600">
+        <li style={{ backgroundColor: tags.tag_bg_color, color: tags.tag_text_color }} className=" flex flex-row gap-2 border border-gray-200 rounded-full p-1 whitespace-nowrap w-min px-1 text-gray-600">
             <p>{tags.tag_name}</p>
             <button
                 className="font-bold pr-1"

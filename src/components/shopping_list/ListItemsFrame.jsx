@@ -1,6 +1,6 @@
-import ListItem from "./listitems/ListItem";
+import ListItem from "./list_items/ListItem";
 
-const ListItems = ({ items, onEdited, onDeleted, sendNewTag, arrayOfTagCategories, sendTagId }) => {
+const ListItemsFrame = ({ items, onEdited, onDeleted, sendNewTag, arrayOfTagCategories, sendTagId }) => {
 
     const returnGroceryList = () => {
         let arr = [];
@@ -27,4 +27,4 @@ const ListItems = ({ items, onEdited, onDeleted, sendNewTag, arrayOfTagCategorie
 
 };
 
-export default ListItems;
+export default ListItemsFrame;

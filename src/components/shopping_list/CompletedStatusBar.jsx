@@ -1,4 +1,4 @@
-const ListButtons = ({fetch}) => {
+const CompletedStatusBar = ({fetch}) => {
 
     return (
         <div>
@@ -9,4 +9,4 @@ const ListButtons = ({fetch}) => {
     )
 };
 
-export default ListButtons;
+export default CompletedStatusBar;
