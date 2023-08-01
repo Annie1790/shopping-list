@@ -1,4 +1,7 @@
+//React Router
 import { Link } from "react-router-dom";
+
+//Components
 
 const Navigation = () => {
 
@@ -7,7 +10,7 @@ const Navigation = () => {
             <div className="px-10 py-2">
                 <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Hello, shopper</h1>
             </div>
-            <div className="lg:gap-10 gap-5 grid grid-cols-2 grid-rows-2 justify-center text-center">
+            <div className="py-5 lg:py-10 lg:gap-10 gap-5 grid grid-cols-2 grid-rows-2 justify-center text-center">
                 <div className="justify-self-end">
                     <Link to={`shopping-list`}>
                         <button className="lg:w-60 lg:h-60 md:w-50 md:h-50 w-40 h-40 bg-center bg-opacity-50 bg-cover relative rounded-lg shadow-grocerySdw bg-groceryBag">
@@ -37,19 +40,6 @@ const Navigation = () => {
                     </Link>
                 </div>
             </div>
-            <div className="p-10">
-                <h1 className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-700 to-slate-950">Recommended</h1>
-            </div>
-            <div className="p-10">
-                <h1 className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-700 to-slate-950">Vitamin</h1>
-            </div>
-            <div className="p-10">
-                <h1 className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-700 to-slate-950">Protein</h1>
-            </div>
-            <div>
-
-            </div>
-
         </div>
 
     )

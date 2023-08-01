@@ -155,6 +155,13 @@ const App = () => {
         }
     }
 
+    const ReturnNavigation = () => {
+        return (
+            <Navigation
+            />
+        )
+    }
+
     const ReturnShoppingList = () => {
         return (
             <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
@@ -176,10 +183,10 @@ const App = () => {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Navigation />
+            element: <ReturnNavigation />
         },
         {
-            path:"/shopping-list",
+            path: "/shopping-list",
             element: <ReturnShoppingList />
         },
         {
@@ -188,7 +195,7 @@ const App = () => {
         }
     ])
     return (
-        <RouterProvider router={router}  />
+        <RouterProvider router={router} />
     )
 };
 
