@@ -3,10 +3,14 @@ import Head from './shopping_list/Head';
 import CompletedStatusBar from './shopping_list/CompletedStatusBar';
 import ListItemsFrame from './shopping_list/ListItemsFrame';
 import NewButton from './shopping_list/NewButton';
-// import Navigation from "./main_menu/Navigation"
+import Navigation from "./main_menu/Navigation";
+import UnderConstruction from './main_menu/UnderConstruction';
 
 //React Hooks
 import { useEffect, useState } from "react";
+
+//React Router
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const API_SERVER_PREFIX = process.env.REACT_APP_API_SERVER_PREFIX;
 
@@ -169,9 +173,22 @@ const App = () => {
         )
     }
 
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Navigation />
+        },
+        {
+            path:"/shopping-list",
+            element: <ReturnShoppingList />
+        },
+        {
+            path: "/under-construction",
+            element: <UnderConstruction />
+        }
+    ])
     return (
-        // <Navigation />
-        <ReturnShoppingList />
+        <RouterProvider router={router}  />
     )
 };
 
