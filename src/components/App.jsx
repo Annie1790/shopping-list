@@ -3,10 +3,14 @@ import Head from './shopping_list/Head';
 import CompletedStatusBar from './shopping_list/CompletedStatusBar';
 import ListItemsFrame from './shopping_list/ListItemsFrame';
 import NewButton from './shopping_list/NewButton';
-// import Navigation from "./main_menu/Navigation"
+import Navigation from "./main_menu/Navigation";
+import UnderConstruction from './main_menu/UnderConstruction';
 
 //React Hooks
 import { useEffect, useState } from "react";
+
+//React Router
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const API_SERVER_PREFIX = process.env.REACT_APP_API_SERVER_PREFIX;
 
@@ -151,11 +155,19 @@ const App = () => {
         }
     }
 
+    const ReturnNavigation = () => {
+        return (
+            <Navigation
+            />
+        )
+    }
+
     const ReturnShoppingList = () => {
         return (
             <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
                 <Head database={groceryList} />
                 <CompletedStatusBar fetch={fetchGroceryList} />
+                <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })} />
                 <ListItemsFrame
                     items={groceryList}
                     onEdited={(item) => updateGroceryListItem(item)}
@@ -163,15 +175,27 @@ const App = () => {
                     sendNewTag={(object) => sendNewTag(object)}
                     sendTagId={(object) => sendTagId(object)}
                     arrayOfTagCategories={tagCategories}
-                />
-                <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })} />
+                />    
             </div>
         )
     }
 
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <ReturnNavigation />
+        },
+        {
+            path: "/shopping-list",
+            element: <ReturnShoppingList />
+        },
+        {
+            path: "/under-construction",
+            element: <UnderConstruction />
+        }
+    ])
     return (
-        // <Navigation />
-        <ReturnShoppingList />
+        <RouterProvider router={router} />
     )
 };
 

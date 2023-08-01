@@ -45,7 +45,7 @@ const NewButton = ({ onAdd }) => {
     return (
         <div>
             <div className="mb-3">
-                <button onClick={() => setExit(true)} className="m-0.5 p-1 border border-gray-400 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Add new item</button>
+                <button onClick={() => setExit(true)} className=" font-bold text-2xl m-0.5 p-1 border border-gray-400 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Add new item</button>
             </div>
             {exit
                 ? <Modal />
