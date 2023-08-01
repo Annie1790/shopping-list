@@ -19,7 +19,7 @@ const NewButton = ({ onAdd }) => {
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Tags</h1>
+                            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">New grocery item</h1>
                             <button
                                 className="shadow-sm text-2xl font-bold text-gray-400 p-1"
                                 onClick={() => setExit(false)}>X</button>
@@ -33,7 +33,7 @@ const NewButton = ({ onAdd }) => {
                                 onClick={() => {
                                     addNewItem(input);
                                 }}
-                                className="p-2">Add tag</button>
+                                className="p-2">Add item</button>
                         </div>
                     </div>
                 </div>
