@@ -167,6 +167,7 @@ const App = () => {
             <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
                 <Head database={groceryList} />
                 <CompletedStatusBar fetch={fetchGroceryList} />
+                <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })} />
                 <ListItemsFrame
                     items={groceryList}
                     onEdited={(item) => updateGroceryListItem(item)}
@@ -174,8 +175,7 @@ const App = () => {
                     sendNewTag={(object) => sendNewTag(object)}
                     sendTagId={(object) => sendTagId(object)}
                     arrayOfTagCategories={tagCategories}
-                />
-                <NewButton onAdd={(name) => sendName({ name: name, is_completed: false })} />
+                />    
             </div>
         )
     }
