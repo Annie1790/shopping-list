@@ -6,6 +6,10 @@ const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
 
     const [tagCategory, setTagCategory] = useState(arrayOfTagCategories[0].tag_id);
 
+    const alertUser = () => {
+        window.alert("Tag added!");
+    }
+
     return (
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -28,7 +32,8 @@ const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
                                 sendNewTag({
                                     grocery_id: item.grocery_id,
                                     tag_id: tagCategory
-                                });
+                                })
+                                alertUser();
                             }}
                             className="p-2">Add tag</button>
                     </div>
