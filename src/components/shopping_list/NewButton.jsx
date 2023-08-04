@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const NewButton = ({ onAdd }) => {
 
     const [exit, setExit] = useState(false);
-    const [input, setInput] = useState("");
+    const userInput = useRef("");
 
     const addNewItem = (prompt) => {
         if (prompt !== "") {
@@ -11,6 +11,11 @@ const NewButton = ({ onAdd }) => {
         } else {
             return
         }
+    }
+
+    const handleUserInput = () => {
+        const input = userInput.current.value;
+        addNewItem(input);
     }
 
     const Modal = () => {
@@ -26,12 +31,12 @@ const NewButton = ({ onAdd }) => {
                         </div>
                         <p className="relative px-12 p-4 flex text-center justify-around">What would you like to add?</p>
                         <div className=" mt-2 flex items-center justify-end px-10 py-2 border-t border-solid border-slate-200 rounded-b">
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" autoFocus type="text" value={input} onChange={(e) => { setInput(e.target.value) }} />
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" autoFocus type="text" ref={userInput}/>
                         </div>
                         <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                             <button
                                 onClick={() => {
-                                    addNewItem(input);
+                                    handleUserInput();
                                 }}
                                 className="p-2">Add item</button>
                         </div>
