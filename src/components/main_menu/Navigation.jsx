@@ -19,7 +19,7 @@ const Navigation = () => {
                     </Link>
                 </div>
                 <div className="justify-self-start">
-                    <Link to={`under-construction`}>
+                    <Link to={`recipes`}>
                         <button className="lg:w-60 lg:h-60 md:w-50 md:h-50 w-40 h-40 bg-center bg-opacity-50 bg-cover relative rounded-lg shadow-grocerySdw bg-recipeBk">
                             <p className="absolute bottom-3 left-3 text-xl md:text-xxl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-50 to-slate-200">Recipes</p>
                         </button>

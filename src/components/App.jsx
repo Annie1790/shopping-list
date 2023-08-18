@@ -5,6 +5,9 @@ import ListItemsFrame from './shopping_list/ListItemsFrame';
 import NewButton from './shopping_list/NewButton';
 import Navigation from "./main_menu/Navigation";
 import UnderConstruction from './main_menu/UnderConstruction';
+import NavAndSearch from './recipes/NavAndSearch';
+import RecipeCategoryButtons from './recipes/RecipeCategoryButtons';
+import RecipesArray from './recipes/RecipesArray';
 
 //React Hooks
 import { useEffect, useState } from "react";
@@ -19,8 +22,8 @@ const App = () => {
     const [tagCategories, setTagCategories] = useState(["example"]);
 
     useEffect(() => {
-        fetchGroceryList("isCompleted=false");
         getArrayOfTagCategories();
+        fetchGroceryList("is_completed=false");
     }, []);
 
     const sendNewTag = async (object) => {
@@ -155,6 +158,16 @@ const App = () => {
         }
     }
 
+    const ReturnRecipes = () => {
+        return (
+            <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
+                <NavAndSearch />
+                <RecipeCategoryButtons />
+                <RecipesArray />
+            </div>
+        )
+    }
+
     const ReturnNavigation = () => {
         return (
             <Navigation
@@ -175,7 +188,7 @@ const App = () => {
                     sendNewTag={(object) => sendNewTag(object)}
                     sendTagId={(object) => sendTagId(object)}
                     arrayOfTagCategories={tagCategories}
-                />    
+                />
             </div>
         )
     }
@@ -192,6 +205,10 @@ const App = () => {
         {
             path: "/under-construction",
             element: <UnderConstruction />
+        },
+        {
+            path: "/recipes",
+            element: <ReturnRecipes />
         }
     ])
     return (

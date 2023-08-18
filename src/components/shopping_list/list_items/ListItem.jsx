@@ -36,7 +36,7 @@ const ListItem = ({ item, onEdited, onDeleted, sendNewTag, arrayOfTagCategories,
 
     const returnGroceryList = () => {
         return (
-            <li>
+            <li className="pl-2">
                 {showInput ? (
                     <div className="flex flex-row items-center gap-3">
                         <label className="flex items-center">
