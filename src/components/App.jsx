@@ -8,6 +8,7 @@ import UnderConstruction from './main_menu/UnderConstruction';
 import NavAndSearch from './recipes/NavAndSearch';
 import RecipeCategoryButtons from './recipes/RecipeCategoryButtons';
 import RecipesArray from './recipes/RecipesArray';
+import AddNewRecipe from './recipes/AddNewRecipe';
 
 //React Hooks
 import { useEffect, useState } from "react";
@@ -158,6 +159,14 @@ const App = () => {
         }
     }
 
+    const ReturnRecipeEditor = () => {
+        return (
+            <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
+                <AddNewRecipe  tags={tagCategories}/>
+            </div>
+        )
+    }
+
     const ReturnRecipes = () => {
         return (
             <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
@@ -209,6 +218,10 @@ const App = () => {
         {
             path: "/recipes",
             element: <ReturnRecipes />
+        },
+        {
+            path: "/recipe-editor",
+            element: <ReturnRecipeEditor />
         }
     ])
     return (
