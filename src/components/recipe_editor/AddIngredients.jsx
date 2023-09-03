@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import TagCategoryOption from "../shopping_list/list_items/tagComponents/TagCategoryOption";
 
-const AddIngredients = ({ arrayOfTagCategories, closeWindow }) => {
+const AddIngredients = ({ arrayOfTagCategories, getIngredient, closeWindow }) => {
+
+    const name = useRef("");
+    //use name.current.value
+    const tagId = useRef(0);
 
     return (
 
@@ -15,18 +19,21 @@ const AddIngredients = ({ arrayOfTagCategories, closeWindow }) => {
                             onClick={() => closeWindow(false)}>X</button>
                     </div>
                     <div className="relative px-12 p-4 flex text-center justify-around">
-                        <p>Ingredient name:</p>
-                        <input></input>
+                        <p className="pr-2">Ingredient name:</p>
+                        <input ref={name} className="rounded border border-slate-400"></input>
                     </div>
 
                     <div className="relative px-12 p-4 flex text-center justify-around">
-                        <p>Ingredient category:</p>
-                        <select id="tags" name="tags">
-                            <TagCategoryOption arrayOfTagCategories={arrayOfTagCategories}/>
+                        <p className="pr-2">Ingredient category:</p>
+                        <select ref={tagId} className="rounded" id="tags" name="tags">
+                            <TagCategoryOption arrayOfTagCategories={arrayOfTagCategories} />
                         </select>
                     </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
-                        <button className="p-2">Add tag</button>
+                        <button onClick={() => {
+                            getIngredient(name, tagId);
+                            closeWindow(false);
+                        }} className="p-2">Add ingredient</button>
                     </div>
                 </div>
             </div>

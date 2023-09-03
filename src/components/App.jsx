@@ -8,7 +8,7 @@ import UnderConstruction from './main_menu/UnderConstruction';
 import NavAndSearch from './recipes/NavAndSearch';
 import RecipeCategoryButtons from './recipes/RecipeCategoryButtons';
 import RecipesArray from './recipes/RecipesArray';
-import AddNewRecipe from './recipes/AddNewRecipe';
+import AddNewRecipe from './recipe_editor/AddNewRecipe';
 
 //React Hooks
 import { useEffect, useState } from "react";
