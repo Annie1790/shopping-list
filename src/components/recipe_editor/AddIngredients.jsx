@@ -31,7 +31,7 @@ const AddIngredients = ({ arrayOfTagCategories, getIngredient, closeWindow }) =>
                     </div>
                     <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                         <button onClick={() => {
-                            getIngredient(name, tagId);
+                            getIngredient(name.current.value, parseInt(tagId.current.value));
                             closeWindow(false);
                         }} className="p-2">Add ingredient</button>
                     </div>
