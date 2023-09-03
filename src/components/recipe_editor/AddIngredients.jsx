@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import TagCategoryOption from "../shopping_list/list_items/tagComponents/TagCategoryOption";
 
 const AddIngredients = ({ arrayOfTagCategories, getIngredient, closeWindow }) => {

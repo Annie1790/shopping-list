@@ -20,11 +20,13 @@ const API_SERVER_PREFIX = process.env.REACT_APP_API_SERVER_PREFIX;
 
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
-    const [tagCategories, setTagCategories] = useState(["example"]);
+    const [tagCategories, setTagCategories] = useState([]);
+    const [recipeTagCategories, setRecipeTagCategories] = useState([]);
 
     useEffect(() => {
         getArrayOfTagCategories();
         fetchGroceryList("is_completed=false");
+        getAllRecipeCategory();
     }, []);
 
     const sendNewTag = async (object) => {
@@ -157,12 +159,62 @@ const App = () => {
         catch (error) {
             console.log(error)
         }
-    }
+    };
+
+    const getAllRecipeCategory = async () => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipeCategories/all`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setRecipeTagCategories(result);
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    };
+
+    // const getFilteredRecipes = async (id) => {
+    //     try {
+    //         const resp = await fetch(`${API_SERVER_PREFIX}/recipeList/filterBy/${id}`, {
+
+    //         })
+    //     }
+    //     catch(error) {
+    //         console.log(error);
+    //     }
+    // };
+
+    const sendNewRecipe = async (newRecipe) => {
+        try {
+            await fetch(`${API_SERVER_PREFIX}/recipeList`, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(newRecipe)
+            })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
 
     const ReturnRecipeEditor = () => {
         return (
             <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
-                <AddNewRecipe  tags={tagCategories}/>
+                <AddNewRecipe
+                    tag={tagCategories}
+                    recipeTag={recipeTagCategories}
+                    post={sendNewRecipe}
+                />
             </div>
         )
     }
