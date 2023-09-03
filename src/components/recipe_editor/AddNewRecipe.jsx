@@ -10,17 +10,18 @@ const AddNewRecipe = ({ tags }) => {
     const [ingredientList, setIngredientList] = useState([]);
     //when form is submitted, set ingredientList to empty arr
 
-    const sendRecipe = () => {
+    const sendRecipe = (e) => {
+        e.preventDefault();
         let recipeObj = {
-            recipeName: recName,
-            recipeDescr: recDesc,
+            recipeName: recName.current.value,
+            recipeDescr: recDesc.current.value,
             ingredients: ingredientList
         }
         setIngredientList([]);
     }
 
     const addIngredientToList = (name, tagId) => {
-        setIngredientList([...ingredientList, { name: name.current.value, tag: tagId }]);
+        setIngredientList([...ingredientList, { name: name, tag: tagId }]);
     }
 
     return (
@@ -55,10 +56,10 @@ const AddNewRecipe = ({ tags }) => {
                     }
                 </div>
                 <div>
-                    <button onClick={() => sendRecipe()}>Save</button>
+                    <button onClick={(e) => sendRecipe(e)}>Save</button>
                 </div>
             </form>
-                    /*modal */
+
             {closeWindow ? (
                 <>
                     <AddIngredients
