@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const NavAndSearch = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="grid grid-cols-3 grid-rows-2">
@@ -17,6 +20,7 @@ const NavAndSearch = () => {
             <form className="max-w-sm px-4 col-span-3">
                 <div className="relative">
                     <svg
+                        onClick={() => navigate("/recipe-editor/new")}
                         xmlns="http://www.w3.org/2000/svg"
                         className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
                         fill="none"

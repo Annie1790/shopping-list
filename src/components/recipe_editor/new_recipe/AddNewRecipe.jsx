@@ -2,9 +2,9 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 //components
-import AddIngredients from "./AddIngredients";
-import IngredientMap from "./IngredientMap";
-import RecipeTagCategoryMap from "./RecipeTagCategoryMap";
+import AddIngredients from "../AddIngredients";
+import IngredientMap from "../IngredientMap";
+import RecipeTagCategoryMap from "../RecipeTagCategoryMap";
 
 const AddNewRecipe = ({ tag, recipeTag, post }) => {
 
@@ -33,7 +33,8 @@ const AddNewRecipe = ({ tag, recipeTag, post }) => {
     }
 
     return (
-        <div >
+        <div>
+            <h1 className="p-4 text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Add new recipe</h1>
             <form className="flex flex-col gap-4 p-4">
                 <div>
                     <label for="recipe_name">Recipe name</label>

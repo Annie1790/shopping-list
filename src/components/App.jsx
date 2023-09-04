@@ -8,7 +8,10 @@ import UnderConstruction from './main_menu/UnderConstruction';
 import NavAndSearch from './recipes/NavAndSearch';
 import RecipeCategoryButtons from './recipes/RecipeCategoryButtons';
 import RecipesArray from './recipes/RecipesArray';
-import AddNewRecipe from './recipe_editor/AddNewRecipe';
+import AddNewRecipe from './recipe_editor/new_recipe/AddNewRecipe';
+import EditorNavigation from './recipe_editor/EditorNavigation';
+import ExistingRecipeSelector from './recipe_editor/edit_recipe/ExistingRecipeSelector';
+import ExistingRecipeEditor from './recipe_editor/edit_recipe/ExistingRecipeEditor';
 
 //React Hooks
 import { useEffect, useState } from "react";
@@ -175,7 +178,7 @@ const App = () => {
                 setRecipeTagCategories(result);
             }
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
         }
     };
@@ -207,7 +210,7 @@ const App = () => {
         }
     };
 
-    const ReturnRecipeEditor = () => {
+    const ReturnNewRecipeEditor = () => {
         return (
             <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
                 <AddNewRecipe
@@ -233,6 +236,12 @@ const App = () => {
         return (
             <Navigation
             />
+        )
+    }
+
+    const ReturnEditorNavigation = () => {
+        return (
+            <EditorNavigation />
         )
     }
 
@@ -273,7 +282,22 @@ const App = () => {
         },
         {
             path: "/recipe-editor",
-            element: <ReturnRecipeEditor />
+            element: <ReturnEditorNavigation />
+        },
+        {
+            path: "/recipe-editor/edit",
+            element: <ExistingRecipeSelector
+                ingredientTag={tagCategories}
+                recipeTag={recipeTagCategories}
+            />,
+
+        },
+        {
+            path: "/recipe-editor/new",
+            element: <ReturnNewRecipeEditor
+                ingredientTag={tagCategories}
+                recipeTag={recipeTagCategories}
+            />
         }
     ])
     return (
