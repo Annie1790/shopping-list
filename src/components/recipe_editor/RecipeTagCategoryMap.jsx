@@ -4,7 +4,7 @@ const RecipeTagCategoryMap = ({array}) => {
         <>  {
             array.map((data) => {
                 return (
-                    <option>
+                    <option value={data.category_id} key={data.category_id}>
                         {data.category_name}
                     </option>
 

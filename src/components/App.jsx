@@ -193,7 +193,7 @@ const App = () => {
 
     const sendNewRecipe = async (newRecipe) => {
         try {
-            await fetch(`${API_SERVER_PREFIX}/recipeList`, {
+            await fetch(`${API_SERVER_PREFIX}/recipe`, {
                 method: "POST",
                 mode: "cors",
                 headers: {

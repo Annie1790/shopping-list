@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //components
 import AddIngredients from "./AddIngredients";
@@ -13,18 +13,19 @@ const AddNewRecipe = ({ tag, recipeTag, post }) => {
     const recipeCategory = useRef("");
     const [closeWindow, setCloseWindow] = useState(false);
     const [ingredientList, setIngredientList] = useState([]);
+    const navigate = useNavigate();
 
     const sendRecipe = (e) => {
         e.preventDefault();
         post({
-            recipeName: recipeName.current.value,
-            recipeDescr: recipeDescription.current.value,
-            recipeCat: recipeCategory.current.value,
-            ingredients: ingredientList
+            recipe_name: recipeName.current.value,
+            recipe_description: recipeDescription.current.value,
+            recipe_category: parseInt(recipeCategory.current.value),
+            recipe_ingredients: ingredientList
         })
         setIngredientList([]);
         window.alert("Recipe added!");
-        redirect("/");
+        navigate("/");
     }
 
     const addIngredientToList = (name, tagId) => {
@@ -44,9 +45,9 @@ const AddNewRecipe = ({ tag, recipeTag, post }) => {
                 </div>
                 <div>
                     <label for="recipe_category">Category</label>
-                    <select useRef={recipeCategory} name="recipe_category">
+                    <select ref={recipeCategory} name="recipe_category">
                         <RecipeTagCategoryMap
-                        array={recipeTag}
+                            array={recipeTag}
                         />
                     </select>
                 </div>
