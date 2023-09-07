@@ -5,13 +5,10 @@ import ListItemsFrame from './shopping_list/ListItemsFrame';
 import NewButton from './shopping_list/NewButton';
 import Navigation from "./main_menu/Navigation";
 import UnderConstruction from './main_menu/UnderConstruction';
-import NavAndSearch from './recipes/NavAndSearch';
-import RecipeCategoryButtons from './recipes/RecipeCategoryButtons';
-import RecipesArray from './recipes/RecipesArray';
+import Recipes from './recipes/Recipes';
 import AddNewRecipe from './recipe_editor/new_recipe/AddNewRecipe';
 import EditorNavigation from './recipe_editor/EditorNavigation';
 import ExistingRecipeSelector from './recipe_editor/edit_recipe/ExistingRecipeSelector';
-import ExistingRecipeEditor from './recipe_editor/edit_recipe/ExistingRecipeEditor';
 
 //React Hooks
 import { useEffect, useState } from "react";
@@ -25,6 +22,7 @@ const App = () => {
     const [groceryList, setGroceryList] = useState([]);
     const [tagCategories, setTagCategories] = useState([]);
     const [recipeTagCategories, setRecipeTagCategories] = useState([]);
+    const [recipeByFilter, setRecipeByFilter] = useState([]);
 
     useEffect(() => {
         getArrayOfTagCategories();
@@ -183,16 +181,35 @@ const App = () => {
         }
     };
 
-    // const getFilteredRecipes = async (id) => {
-    //     try {
-    //         const resp = await fetch(`${API_SERVER_PREFIX}/recipeList/filterBy/${id}`, {
+    const fetchFilteredRecipes = async (filterId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/findByCategory/${filterId}`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setRecipeByFilter(result);
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    } 
 
-    //         })
-    //     }
-    //     catch(error) {
-    //         console.log(error);
-    //     }
-    // };
+    const updateRecipe = async (id) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipeList/filterBy/${id}`, {
+
+            })
+        }
+        catch(error) {
+            console.log(error);
+        }
+    };
 
     const sendNewRecipe = async (newRecipe) => {
         try {
@@ -224,11 +241,9 @@ const App = () => {
 
     const ReturnRecipes = () => {
         return (
-            <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
-                <NavAndSearch />
-                <RecipeCategoryButtons />
-                <RecipesArray />
-            </div>
+            <Recipes 
+            recipeArray={recipeByFilter}
+            fetch={fetchFilteredRecipes} />
         )
     }
 

@@ -22,10 +22,6 @@ const ExistingRecipeEditor = ({ ingredientTag, recipeTag }) => {
         window.alert("Recipe added!");
         navigate("/");
     }
-
-
-    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
-
     
     const addIngredientToList = (name, tagId) => {
         setIngredientList([...ingredientList, { name: name, tag: tagId }]);
