@@ -1,11 +1,13 @@
 const RecipeMap = ({recipes}) => {
     return (
         <>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
+            {recipes.map((segment) => {
+                return (
+                    <option>{segment.recipe_name}</option>
+                )
+            })}
         </>
+
     )
 };
 

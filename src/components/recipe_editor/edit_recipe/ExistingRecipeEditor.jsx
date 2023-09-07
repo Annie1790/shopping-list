@@ -6,10 +6,11 @@ import AddIngredients from "../AddIngredients";
 import IngredientMap from "../IngredientMap";
 import RecipeTagCategoryMap from "../RecipeTagCategoryMap";
 
-const ExistingRecipeEditor = ({ ingredientTag, recipeTag }) => {
+const ExistingRecipeEditor = ({ ingredientTag, recipeTag, selectedRecipe,updateRecipe }) => {
 
-    const recipeName = useRef("");
-    const recipeDescription = useRef("");
+
+    const recipeName = useRef(selectedRecipe.recipe_name);
+    const recipeDescription = useRef(selectedRecipe.recipe_description);
     const recipeCategory = useRef("");
     const [closeWindow, setCloseWindow] = useState(false);
     const [ingredientList, setIngredientList] = useState([]);
@@ -17,12 +18,17 @@ const ExistingRecipeEditor = ({ ingredientTag, recipeTag }) => {
 
     const sendRecipe = (e) => {
         e.preventDefault();
-
+        updateRecipe({
+            recipe_name: recipeName.current.value,
+            recipe_description: recipeDescription.current.value,
+            recipe_category: parseInt(recipeCategory.current.value),
+            recipe_ingredients: ingredientList
+        })
         setIngredientList([]);
-        window.alert("Recipe added!");
+        window.alert("Recipe modified!");
         navigate("/");
     }
-    
+
     const addIngredientToList = (name, tagId) => {
         setIngredientList([...ingredientList, { name: name, tag: tagId }]);
     }
@@ -32,11 +38,11 @@ const ExistingRecipeEditor = ({ ingredientTag, recipeTag }) => {
             <form className="flex flex-col gap-4 p-4">
                 <div>
                     <label for="recipe_name">Recipe name</label>
-                    <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="recipe_name" placeholder="casserole" ref={recipeName}></input>
+                    <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="recipe_name" placeholder="casserole" ref={recipeName} key={selectedRecipe.recipe_name} defaultValue={selectedRecipe.recipe_name}></input>
                 </div>
                 <div>
                     <label for="recipe_description">Description</label>
-                    <input className=" h-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="recipe" placeholder="Steps..." ref={recipeDescription}></input>
+                    <input className=" h-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" id="recipe" placeholder="Steps..." ref={recipeDescription} key={selectedRecipe.recipe_description} defaultValue={selectedRecipe.recipe_description}></input>
                 </div>
                 <div>
                     <label for="recipe_category">Category</label>

@@ -23,11 +23,14 @@ const App = () => {
     const [tagCategories, setTagCategories] = useState([]);
     const [recipeTagCategories, setRecipeTagCategories] = useState([]);
     const [recipeByFilter, setRecipeByFilter] = useState([]);
+    const [recipesToUpdate, setRecipesToUpdate] = useState([]);
 
     useEffect(() => {
         getArrayOfTagCategories();
         fetchGroceryList("is_completed=false");
         getAllRecipeCategory();
+        fetchFilteredRecipes("all");
+        fetchRecipeForUpdating();
     }, []);
 
     const sendNewTag = async (object) => {
@@ -181,6 +184,25 @@ const App = () => {
         }
     };
 
+    const fetchRecipeForUpdating = async () => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/findByCategory/all`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setRecipesToUpdate(result);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     const fetchFilteredRecipes = async (filterId) => {
         try {
             const resp = await fetch(`${API_SERVER_PREFIX}/recipe/findByCategory/${filterId}`, {
@@ -195,21 +217,45 @@ const App = () => {
                 setRecipeByFilter(result);
             }
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
         }
-    } 
+    }
 
-    const updateRecipe = async (id) => {
+    const fetchRecipeIngredientsById = async (recipeId) => {
         try {
-            const resp = await fetch(`${API_SERVER_PREFIX}/recipeList/filterBy/${id}`, {
-
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/${recipeId}/ingredients`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
             })
+            if (resp.ok) {
+                const result = await resp.json();
+                return result;
+            }
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
         }
-    };
+    }
+
+    // const updateRecipe = async (updatedRecipe) => {
+    //     try {
+    //         const resp = await fetch(`${API_SERVER_PREFIX}/recipes`, {
+    //             method: "PUT",
+    //             mode: "cors",
+    //             headers: {
+    //                 "Content-type": "application/json"
+    //             },
+    //             body: JSON.stringify(updatedRecipe)
+    //         })
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     const sendNewRecipe = async (newRecipe) => {
         try {
@@ -241,9 +287,10 @@ const App = () => {
 
     const ReturnRecipes = () => {
         return (
-            <Recipes 
-            recipeArray={recipeByFilter}
-            fetch={fetchFilteredRecipes} />
+            <Recipes
+                recipeArray={recipeByFilter}
+                fetch={fetchFilteredRecipes}
+                ingredientArray={fetchRecipeIngredientsById} />
         )
     }
 
@@ -304,6 +351,8 @@ const App = () => {
             element: <ExistingRecipeSelector
                 ingredientTag={tagCategories}
                 recipeTag={recipeTagCategories}
+                fetchedRecipes={recipesToUpdate}
+                // update={(updatedObj) => updateRecipe(updatedObj)}
             />,
 
         },
