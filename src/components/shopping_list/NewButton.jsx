@@ -38,7 +38,7 @@ const NewButton = ({ onAdd }) => {
                                 onClick={() => {
                                     handleUserInput();
                                 }}
-                                className="p-2">Add item</button>
+                                className="p-2 rounded-lg bg-pink-500/50 text-xl text-white">Add item</button>
                         </div>
                     </div>
                 </div>

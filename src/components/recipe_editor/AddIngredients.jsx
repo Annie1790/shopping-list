@@ -33,7 +33,7 @@ const AddIngredients = ({ arrayOfTagCategories, getIngredient, closeWindow }) =>
                         <button onClick={() => {
                             getIngredient(name.current.value, parseInt(tagId.current.value));
                             closeWindow(false);
-                        }} className="p-2">Add ingredient</button>
+                        }} className="p-2 rounded-lg bg-pink-500/50 text-xl text-white">Add ingredient</button>
                     </div>
                 </div>
             </div>
