@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 
-const RecipeListItem = ({ ingredientArray, segment, deleteRecipe }) => {
+const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true);
     const [ingredients, setIngredients] = useState([]);
+    const [star, setStar] = useState(segment.recipe_is_favorite);
 
     const isUserSureToDelete = () => {
         if (window.confirm("Are you sure?") === true) {
-            deleteRecipe(segment.recipe_id); 
+            deleteRecipe(segment.recipe_id);
             setShowModal(false)
         } else {
             return
@@ -25,7 +26,7 @@ const RecipeListItem = ({ ingredientArray, segment, deleteRecipe }) => {
         if (showModal === true && loading === true) {
             getIngredients(segment.recipe_id);
         }
-    }, [segment.recipe_id, ingredientArray, loading, showModal])
+    }, [segment.recipe_id, segment.recipe_is_favorite, ingredientArray, loading, showModal])
 
     const Spinner = () => {
         return (
@@ -34,6 +35,32 @@ const RecipeListItem = ({ ingredientArray, segment, deleteRecipe }) => {
                     <div className="border-t-transparent border-solid animate-spin  rounded-full border-pink-500 border-8 h-24 w-24"></div>
                 </div>
             </div>
+        )
+    }
+
+    const StarredRecipeSvg = () => {
+        return (
+            <>
+                {star === true ? (
+                    <button
+                        onClick={() => { starRecipe({ id: segment.recipe_id, is_favorite: !star }); setStar(!star) }}
+                        className="p-2 rounded-lg bg-blue-500/50 text-xl text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 fill-yellow-300">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                        </svg>
+                    </button>
+                ) : (
+                    <>
+                        <button
+                            onClick={() => { starRecipe({ id: segment.recipe_id, is_favorite: !star }); setStar(!star) }}
+                            className="fill-none p-2 rounded-lg bg-blue-500/50 text-xl text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                            </svg>
+                        </button>
+                    </>
+                )}
+            </>
         )
     }
 
@@ -58,16 +85,18 @@ const RecipeListItem = ({ ingredientArray, segment, deleteRecipe }) => {
                             })}
                         </li>
                         <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b gap-4">
+                            <StarredRecipeSvg />
                             <button className="p-2 rounded-lg bg-pink-500/50 text-xl text-white" >Add to meal plan</button>
-                            <button 
-                            onClick={() => isUserSureToDelete()}
-                            className="p-2 rounded-lg bg-red-500/90 text-xl text-white">Delete</button>
+                            <button
+                                onClick={() => isUserSureToDelete()}
+                                className="p-2 rounded-lg bg-red-500/90 text-xl text-white">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
+
 
     const Button = () => {
         return (

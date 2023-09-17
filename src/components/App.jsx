@@ -259,21 +259,38 @@ const App = () => {
         }
     }
 
-    // const updateRecipe = async (updatedRecipe) => {
-    //     try {
-    //         const resp = await fetch(`${API_SERVER_PREFIX}/recipes`, {
-    //             method: "PUT",
-    //             mode: "cors",
-    //             headers: {
-    //                 "Content-type": "application/json"
-    //             },
-    //             body: JSON.stringify(updatedRecipe)
-    //         })
-    //     }
-    //     catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    const updateRecipe = async (updatedRecipe) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipes`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(updatedRecipe)
+            })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
+    const starRecipe = async (recipeId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/setFavorite`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(recipeId)
+            }
+            )
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     const sendNewRecipe = async (newRecipe) => {
         try {
@@ -310,7 +327,8 @@ const App = () => {
                 fetch={fetchFilteredRecipes}
                 ingredientArray={fetchRecipeIngredientsById}
                 deleteRecipe={deleteRecipe}
-                />
+                starRecipe={starRecipe}
+            />
         )
     }
 
@@ -372,7 +390,7 @@ const App = () => {
                 ingredientTag={tagCategories}
                 recipeTag={recipeTagCategories}
                 fetchedRecipes={recipesToUpdate}
-                // update={(updatedObj) => updateRecipe(updatedObj)}
+            // update={(updatedObj) => updateRecipe(updatedObj)}
             />,
 
         },
