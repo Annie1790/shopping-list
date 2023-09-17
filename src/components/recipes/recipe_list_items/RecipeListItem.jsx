@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
 
-const RecipeListItem = ({ ingredientArray, segment }) => {
+const RecipeListItem = ({ ingredientArray, segment, deleteRecipe }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true);
     const [ingredients, setIngredients] = useState([]);
+
+    const isUserSureToDelete = () => {
+        if (window.confirm("Are you sure?") === true) {
+            deleteRecipe(segment.recipe_id); 
+            setShowModal(false)
+        } else {
+            return
+        }
+    }
 
     useEffect(() => {
         const getIngredients = (id) => {
@@ -50,7 +59,9 @@ const RecipeListItem = ({ ingredientArray, segment }) => {
                         </li>
                         <div className=" mt-2 flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b gap-4">
                             <button className="p-2 rounded-lg bg-pink-500/50 text-xl text-white" >Add to meal plan</button>
-                            <button className="p-2 rounded-lg bg-red-500/90 text-xl text-white">Delete</button>
+                            <button 
+                            onClick={() => isUserSureToDelete()}
+                            className="p-2 rounded-lg bg-red-500/90 text-xl text-white">Delete</button>
                         </div>
                     </div>
                 </div>

@@ -241,6 +241,24 @@ const App = () => {
         }
     }
 
+    const deleteRecipe = async (recipeId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/${recipeId}/ingredients`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+            })
+            if (resp.ok) {
+                fetchFilteredRecipes("all");
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     // const updateRecipe = async (updatedRecipe) => {
     //     try {
     //         const resp = await fetch(`${API_SERVER_PREFIX}/recipes`, {
@@ -290,7 +308,9 @@ const App = () => {
             <Recipes
                 recipeArray={recipeByFilter}
                 fetch={fetchFilteredRecipes}
-                ingredientArray={fetchRecipeIngredientsById} />
+                ingredientArray={fetchRecipeIngredientsById}
+                deleteRecipe={deleteRecipe}
+                />
         )
     }
 
