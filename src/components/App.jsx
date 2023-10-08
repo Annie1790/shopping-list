@@ -259,22 +259,6 @@ const App = () => {
         }
     }
 
-    const updateRecipe = async (updatedRecipe) => {
-        try {
-            const resp = await fetch(`${API_SERVER_PREFIX}/recipes`, {
-                method: "PUT",
-                mode: "cors",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(updatedRecipe)
-            })
-        }
-        catch (error) {
-            console.log(error);
-        }
-    };
-
     const starRecipe = async (recipeId) => {
         try {
             const resp = await fetch(`${API_SERVER_PREFIX}/recipe/setFavorite`, {
@@ -391,7 +375,8 @@ const App = () => {
                 recipeTag={recipeTagCategories}
                 fetchedRecipes={recipesToUpdate}
                 ingredientById={fetchRecipeIngredientsById}
-            // update={(updatedObj) => updateRecipe(updatedObj)}
+                del={deleteRecipe}
+                post={sendNewRecipe}
             />,
 
         },

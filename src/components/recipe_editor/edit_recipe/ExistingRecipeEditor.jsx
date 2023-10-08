@@ -6,7 +6,7 @@ import AddIngredients from "../AddIngredients";
 import IngredientMap from "../IngredientMap";
 import RecipeTagCategoryMap from "../RecipeTagCategoryMap";
 
-const ExistingRecipeEditor = ({ ingredientTag, recipeTag, selectedRecipe, updateRecipe, ingredientById }) => {
+const ExistingRecipeEditor = ({ ingredientTag, recipeTag, selectedRecipe, post, del, ingredientById }) => {
 
 
     const recipeName = useRef(selectedRecipe.recipe_name);
@@ -14,37 +14,41 @@ const ExistingRecipeEditor = ({ ingredientTag, recipeTag, selectedRecipe, update
     const recipeCategory = useRef("");
     const [closeWindow, setCloseWindow] = useState(false);
     const [ingredientList, setIngredientList] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loadedRecipeId, setLoadedRecipeId] = useState(null);
     const navigate = useNavigate();
 
     const sendRecipe = (e) => {
         e.preventDefault();
-        updateRecipe({
+        let updatedRecipe = {
             recipe_name: recipeName.current.value,
             recipe_description: recipeDescription.current.value,
             recipe_category: parseInt(recipeCategory.current.value),
+            recipe_id: selectedRecipe.recipe_id,
             recipe_ingredients: ingredientList
-        })
-        setIngredientList([]);
-        window.alert("Recipe modified!");
-        navigate("/");
+        }
+        del(updatedRecipe.recipe_id).then(() => {
+            post(updatedRecipe).then(() => {
+                window.alert("Recipe modified!");
+                navigate("/");
+                window.location.reload();
+            });
+        });
     }
 
     useEffect(() => {
         const getIngredients = (id) => {
             ingredientById(id).then((data) => {
-                console.log(data);
-                setLoading(false);
+                setLoadedRecipeId(id);
                 setIngredientList(data);
             })
         }
-        if (loading) {
+        if (loadedRecipeId !== selectedRecipe.recipe_id) {
             getIngredients(selectedRecipe.recipe_id)
         }
-    },[selectedRecipe])
+    }, [selectedRecipe, loadedRecipeId])
 
     const addIngredientToList = (name, tagId) => {
-        setIngredientList([...ingredientList, { name: name, tag: tagId }]);
+        setIngredientList([...ingredientList, { ingredient_name: name, ingredient_category: tagId }]);
     }
 
     const Spinner = () => {
@@ -81,19 +85,13 @@ const ExistingRecipeEditor = ({ ingredientTag, recipeTag, selectedRecipe, update
                         <button onClick={() => setCloseWindow(true)} type="button" className="text-xl m-0.5 p-1 border border-gray-400 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Add new ingredient</button>
                     </div>
                     <div className="flex flex-row flex-wrap p-4 gap-4 justify-center">
-                        {
-                            ingredientList.length < 1 ? (
-                                <></>
-                            ) : (
-                                <IngredientMap setter={setIngredientList} ingredientList={ingredientList} />
-                            )
-                        }
+                        <IngredientMap setter={setIngredientList} ingredientList={ingredientList} />
                     </div>
                     <div>
                         <button onClick={(e) => sendRecipe(e)}>Save</button>
                     </div>
                 </form>
-    
+
                 {closeWindow ? (
                     <>
                         <AddIngredients
@@ -106,13 +104,13 @@ const ExistingRecipeEditor = ({ ingredientTag, recipeTag, selectedRecipe, update
                         <>
                         </>
                     )}
-    
+
             </div>
         )
     }
 
     return (
-            loading ? <Spinner /> : <Editor />
+        loadedRecipeId !== selectedRecipe.recipe_id ? <Spinner /> : <Editor />
     )
 };
 

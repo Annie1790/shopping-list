@@ -29,7 +29,7 @@ const AddNewRecipe = ({ tag, recipeTag, post }) => {
     }
 
     const addIngredientToList = (name, tagId) => {
-        setIngredientList([...ingredientList, { name: name, tag: tagId }]);
+        setIngredientList([...ingredientList, { ingredient_name: name, ingredient_category: tagId }]);
     }
 
     return (

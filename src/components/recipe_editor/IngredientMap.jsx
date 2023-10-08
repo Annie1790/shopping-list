@@ -17,7 +17,7 @@ const IngredientMap = ({ ingredientList, setter }) => {
             ingredientList.map((data) => {
                 return (
                     <div className="p-2 rounded border flex flex-row gap-4">
-                        <p>{data.name}</p>
+                        <p>{data.ingredient_name}</p>
                         <button type="button" onClick={() => deleteIngredient(data)}>x</button>
                     </div>
 
