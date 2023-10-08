@@ -390,6 +390,7 @@ const App = () => {
                 ingredientTag={tagCategories}
                 recipeTag={recipeTagCategories}
                 fetchedRecipes={recipesToUpdate}
+                ingredientById={fetchRecipeIngredientsById}
             // update={(updatedObj) => updateRecipe(updatedObj)}
             />,
 

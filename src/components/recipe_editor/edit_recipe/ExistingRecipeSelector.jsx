@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import RecipeMap from "./RecipeMap";
 import ExistingRecipeEditor from "./ExistingRecipeEditor";
 
-const ExistingRecipeSelector = ({ ingredientTag, recipeTag, fetchedRecipes, updateRecipe }) => {
+const ExistingRecipeSelector = ({ ingredientTag, recipeTag, fetchedRecipes, updateRecipe, ingredientById }) => {
 
     const [isRecipeSelected, setIsRecipeSelected] = useState(null);
     const [selectedRecipe, setSelectedRecipe] = useState([]);
@@ -39,6 +39,7 @@ const ExistingRecipeSelector = ({ ingredientTag, recipeTag, fetchedRecipes, upda
                     selectedRecipe={selectedRecipe}
                     ingredientTag={ingredientTag}
                     recipeTag={recipeTag}
+                    ingredientById={ingredientById}
                 /> : <></>}
             </div>
         </div>
