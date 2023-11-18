@@ -27,7 +27,7 @@ RUN npm run build
 
 
 # Final stage for app image
-FROM node:${NODE_VERSION}-alpine
+FROM nginx:${NGINX_VERSION}-alpine
 
 # Copy built application
 COPY --from=build /app/build /usr/share/nginx/html
