@@ -1,6 +1,6 @@
 import RecipeListItem from "./recipe_list_items/RecipeListItem";
 
-const RecipeList = ({ recipeArray, ingredientArray,deleteRecipe, starRecipe }) => {
+const RecipeList = ({ recipeArray, ingredientArray,deleteRecipe, starRecipe, addMealPlan }) => {
 
     const returnRecipesArray = () => {
         let arr = [];
@@ -11,6 +11,7 @@ const RecipeList = ({ recipeArray, ingredientArray,deleteRecipe, starRecipe }) =
                     segment={segment}
                     deleteRecipe={deleteRecipe}
                     starRecipe={starRecipe}
+                    addMealPlan={addMealPlan}
                 />
             )
         }

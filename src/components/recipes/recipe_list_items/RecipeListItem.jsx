@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe }) => {
+const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe, addMealPlan }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -19,15 +19,25 @@ const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe }) 
     }
 
     const toggleIngredientCollection = (x) => {
-            if (!collectionOfIngredients.current.hasOwnProperty(x.ingredient_id)) {
-                collectionOfIngredients.current[x.ingredient_id] = x;
-            } else {
-                delete collectionOfIngredients.current[x.ingredient_id];
-            }
+        if (!collectionOfIngredients.current.hasOwnProperty(x.ingredient_id)) {
+            collectionOfIngredients.current[x.ingredient_id] = x;
+        } else {
+            delete collectionOfIngredients.current[x.ingredient_id];
+        }
     }
 
     const addRecipeToMealPlan = () => {
+        let array = [];
 
+        for (let ingredient in collectionOfIngredients.current) {
+            array.push(ingredient)
+        }
+
+        let result = {
+            "recipe:": segment,
+            "selected_ingredients": array
+        }
+        addMealPlan(result);
         closeModal();
     }
 
@@ -108,7 +118,7 @@ const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe }) 
                                             <input
                                                 type="checkbox"
                                                 className="w-6 h-6"
-                                                onChange={() => {toggleIngredientCollection(ingredient)}}
+                                                onChange={() => { toggleIngredientCollection(ingredient) }}
                                             ></input>
                                             <ul className="text-slate-600 text-xl px-4" key={ingredient.ingredient_id}>
                                                 {ingredient.ingredient_name}

@@ -276,6 +276,22 @@ const App = () => {
         }
     }
 
+    const createMealPlanWithSelectedIngredients = async (object) => {
+        try {
+            await fetch(`${API_SERVER_PREFIX}/mealPlan/addMeal`, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(object)
+            })
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
     const sendNewRecipe = async (newRecipe) => {
         try {
             await fetch(`${API_SERVER_PREFIX}/recipe`, {
@@ -312,6 +328,7 @@ const App = () => {
                 ingredientArray={fetchRecipeIngredientsById}
                 deleteRecipe={deleteRecipe}
                 starRecipe={starRecipe}
+                addMealPlan={createMealPlanWithSelectedIngredients}
             />
         )
     }
