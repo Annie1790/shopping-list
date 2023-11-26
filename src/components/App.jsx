@@ -5,9 +5,10 @@ import ListItemsFrame from './shopping_list/ListItemsFrame';
 import NewButton from './shopping_list/NewButton';
 import Navigation from "./main_menu/Navigation";
 import UnderConstruction from './main_menu/UnderConstruction';
-import NavAndSearch from './recipes/NavAndSearch';
-import RecipeCategoryButtons from './recipes/RecipeCategoryButtons';
-import RecipesArray from './recipes/RecipesArray';
+import Recipes from './recipes/Recipes';
+import AddNewRecipe from './recipe_editor/new_recipe/AddNewRecipe';
+import EditorNavigation from './recipe_editor/EditorNavigation';
+import ExistingRecipeSelector from './recipe_editor/edit_recipe/ExistingRecipeSelector';
 
 //React Hooks
 import { useEffect, useState } from "react";
@@ -19,11 +20,17 @@ const API_SERVER_PREFIX = process.env.REACT_APP_API_SERVER_PREFIX;
 
 const App = () => {
     const [groceryList, setGroceryList] = useState([]);
-    const [tagCategories, setTagCategories] = useState(["example"]);
+    const [tagCategories, setTagCategories] = useState([]);
+    const [recipeTagCategories, setRecipeTagCategories] = useState([]);
+    const [recipeByFilter, setRecipeByFilter] = useState([]);
+    const [recipesToUpdate, setRecipesToUpdate] = useState([]);
 
     useEffect(() => {
         getArrayOfTagCategories();
         fetchGroceryList("is_completed=false");
+        getAllRecipeCategory();
+        fetchFilteredRecipes("all");
+        fetchRecipeForUpdating();
     }, []);
 
     const sendNewTag = async (object) => {
@@ -156,15 +163,190 @@ const App = () => {
         catch (error) {
             console.log(error)
         }
+    };
+
+    const getAllRecipeCategory = async () => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipeCategories/all`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setRecipeTagCategories(result);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchRecipeForUpdating = async () => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/findByCategory/all`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setRecipesToUpdate(result);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchFilteredRecipes = async (filterId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/findByCategory/${filterId}`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                setRecipeByFilter(result);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchRecipeIngredientsById = async (recipeId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/${recipeId}/ingredients`, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+            })
+            if (resp.ok) {
+                const result = await resp.json();
+                return result;
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const deleteRecipe = async (recipeId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/${recipeId}/ingredients`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+            })
+            if (resp.ok) {
+                fetchFilteredRecipes("all");
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const starRecipe = async (recipeId) => {
+        try {
+            const resp = await fetch(`${API_SERVER_PREFIX}/recipe/setFavorite`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(recipeId)
+            }
+            )
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const createMealPlanWithSelectedIngredients = async (object) => {
+        try {
+            await fetch(`${API_SERVER_PREFIX}/mealPlan/meal`, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(object)
+            })
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
+    const updateMealBoolean = async (object) => {
+        try {
+            await fetch(`${API_SERVER_PREFIX}/mealPlan/meal/${object.id}`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(object)
+            })
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
+    const sendNewRecipe = async (newRecipe) => {
+        try {
+            await fetch(`${API_SERVER_PREFIX}/recipe`, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(newRecipe)
+            })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
+    const ReturnNewRecipeEditor = () => {
+        return (
+            <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
+                <AddNewRecipe
+                    tag={tagCategories}
+                    recipeTag={recipeTagCategories}
+                    post={sendNewRecipe}
+                />
+            </div>
+        )
     }
 
     const ReturnRecipes = () => {
         return (
-            <div className='flex flex-col col-start-2 bg-slate-50 shadow-xl gap-4 overflow-y-scroll no-scrollbar'>
-                <NavAndSearch />
-                <RecipeCategoryButtons />
-                <RecipesArray />
-            </div>
+            <Recipes
+                recipeArray={recipeByFilter}
+                fetch={fetchFilteredRecipes}
+                ingredientArray={fetchRecipeIngredientsById}
+                deleteRecipe={deleteRecipe}
+                starRecipe={starRecipe}
+                addMealPlan={createMealPlanWithSelectedIngredients}
+                updateMealBoolean={updateMealBoolean}
+            />
         )
     }
 
@@ -172,6 +354,12 @@ const App = () => {
         return (
             <Navigation
             />
+        )
+    }
+
+    const ReturnEditorNavigation = () => {
+        return (
+            <EditorNavigation />
         )
     }
 
@@ -209,6 +397,29 @@ const App = () => {
         {
             path: "/recipes",
             element: <ReturnRecipes />
+        },
+        {
+            path: "/recipe-editor",
+            element: <ReturnEditorNavigation />
+        },
+        {
+            path: "/recipe-editor/edit",
+            element: <ExistingRecipeSelector
+                ingredientTag={tagCategories}
+                recipeTag={recipeTagCategories}
+                fetchedRecipes={recipesToUpdate}
+                ingredientById={fetchRecipeIngredientsById}
+                del={deleteRecipe}
+                post={sendNewRecipe}
+            />,
+
+        },
+        {
+            path: "/recipe-editor/new",
+            element: <ReturnNewRecipeEditor
+                ingredientTag={tagCategories}
+                recipeTag={recipeTagCategories}
+            />
         }
     ])
     return (

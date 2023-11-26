@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const NavAndSearch = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="grid grid-cols-3 grid-rows-2">
             <h1 className="col-span-2 p-4 sm:text-3xl text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">Get Cooking today!</h1>
-            <button className="justify-self-end pr-4">
+            <button onClick={() => navigate("/recipe-editor/new")} className="justify-self-end pr-4">
                 <svg className="fill-slate-400 border rounded-full sm:w-12 sm:h-12 w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="48"
                     viewBox="0 -960 960 960" width="48"><path
                         d="M464.615-464.615H255.384q-6.538 0-10.961-4.485Q240-473.586 

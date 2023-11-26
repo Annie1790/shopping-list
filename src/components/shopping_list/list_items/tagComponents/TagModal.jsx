@@ -35,7 +35,7 @@ const TagModal = ({ setter, item, sendNewTag, arrayOfTagCategories }) => {
                                 })
                                 alertUser();
                             }}
-                            className="p-2">Add tag</button>
+                            className="p-2 rounded-lg bg-pink-500/50 text-xl text-white">Add tag</button>
                     </div>
                 </div>
             </div>
