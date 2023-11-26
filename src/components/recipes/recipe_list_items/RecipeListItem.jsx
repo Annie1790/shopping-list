@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe, addMealPlan }) => {
+const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe, addMealPlan, updateMealBoolean }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -27,17 +27,14 @@ const RecipeListItem = ({ ingredientArray, segment, deleteRecipe, starRecipe, ad
     }
 
     const addRecipeToMealPlan = () => {
-        let array = [];
+        let selection = [];
 
         for (let ingredient in collectionOfIngredients.current) {
-            array.push(ingredient)
+            selection.push(ingredient)
         }
 
-        let result = {
-            "recipe:": segment,
-            "selected_ingredients": array
-        }
-        addMealPlan(result);
+        addMealPlan({"selected_ingredients": selection});
+        updateMealBoolean({"id": segment.recipe_id});
         closeModal();
     }
 
